@@ -2,7 +2,10 @@ package com.stalixo.slimerpg;
 
 import com.mojang.logging.LogUtils;
 import com.stalixo.slimerpg.event.ModEvents;
+import com.stalixo.slimerpg.menu.ModMenuTypes;
+import com.stalixo.slimerpg.menu.PlayerAttributeScreen;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -26,6 +29,7 @@ public class Slimerpg {
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
+        ModMenuTypes.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(new ModEvents());
@@ -48,6 +52,7 @@ public class Slimerpg {
         public static void onClientSetup(FMLClientSetupEvent event) {
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+            MenuScreens.register(ModMenuTypes.ATTRIBUTE_MENU.get(), PlayerAttributeScreen::new);
         }
     }
 }

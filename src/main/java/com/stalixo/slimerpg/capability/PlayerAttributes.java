@@ -96,18 +96,22 @@ public class PlayerAttributes implements IPlayerAttributes {
         this.attributePoints = source.getAttributePoints();
     }
 
-    // Salvar e carregar dados NBT
     public void saveNBTData(CompoundTag nbt) {
         for (Attributes attribute : Attributes.values()) {
             nbt.putInt(attribute.getNbtKey(), attributes.get(attribute));
+            System.out.println("Salvando " + attribute.getNbtKey() + ": " + attributes.get(attribute));
         }
         nbt.putInt("attributePoints", attributePoints);
     }
 
     public void loadNBTData(CompoundTag nbt) {
         for (Attributes attribute : Attributes.values()) {
-            this.attributes.put(attribute, nbt.getInt(attribute.getNbtKey()));
+            int value = nbt.getInt(attribute.getNbtKey());
+            this.attributes.put(attribute, value);
+            System.out.println("Carregando " + attribute.getNbtKey() + ": " + value);
         }
         this.attributePoints = nbt.getInt("attributePoints");
+        System.out.println("Carregando attributePoints: " + this.attributePoints);
     }
+
 }
