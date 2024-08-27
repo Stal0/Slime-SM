@@ -47,6 +47,16 @@ public class ListAttributesCommand {
                 message = "Wisdom: " + attributes.getWisdom();
                 player.sendSystemMessage(Component.literal(message).withStyle(ChatFormatting.AQUA));
 
+                message = "Attributes Points: " + attributes.getAttributePoints();
+                player.sendSystemMessage(Component.literal(message).withStyle(ChatFormatting.DARK_AQUA));
+
+                message = "Level: " + attributes.getLevelPlayer();
+                player.sendSystemMessage(Component.literal(message).withStyle(ChatFormatting.DARK_AQUA));
+
+                message = "Experience Points: " + attributes.getExperiencePoints();
+                player.sendSystemMessage(Component.literal(message).withStyle(ChatFormatting.DARK_AQUA));
+
+
             });
         } catch (CommandSyntaxException e) {
             e.printStackTrace();

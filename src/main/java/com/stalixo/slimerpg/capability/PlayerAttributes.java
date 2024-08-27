@@ -8,14 +8,18 @@ import java.util.EnumMap;
 public class PlayerAttributes implements IPlayerAttributes {
 
     private final EnumMap<Attributes, Integer> attributes = new EnumMap<>(Attributes.class);
-    private int attributePoints;  // Pontos de atributo disponíveis para distribuição
+    private int attributePoints;
+    private double experiencePoints;
+    private int levelPlayer;
 
     public PlayerAttributes() {
         // Inicializar atributos com valor padrão (por exemplo, 0)
         for (Attributes attribute : Attributes.values()) {
             attributes.put(attribute, 0);
         }
-        this.attributePoints = 0;  // Inicialmente, o jogador tem 0 pontos de atributo disponíveis
+        this.attributePoints = 0;
+        this.experiencePoints = 0;
+        this.levelPlayer = 1;
     }
 
     // Métodos específicos para obter e definir cada atributo
@@ -68,6 +72,37 @@ public class PlayerAttributes implements IPlayerAttributes {
         this.attributePoints += points;
     }
 
+    public double getExperiencePoints() {
+        return experiencePoints;
+    }
+
+    public void addExperiencePoints(int points) {
+        this.experiencePoints += points;
+    }
+
+    public int getLevelPlayer() {
+        return levelPlayer;
+    }
+
+    public void setLevelPlayer(int levelPlayer) {
+        this.levelPlayer = levelPlayer;
+    }
+
+    @Override
+    public int getAttribute(Attributes attribute) {
+        return attributes.get(attribute);
+    }
+
+    @Override
+    public void setAttribute(Attributes attribute, int value) {
+        attributes.put(attribute, value);
+    }
+
+    public int getExperienceToNextLevel() {
+        // Exemplo simples: 100 pontos de experiência para subir de nível
+        return levelPlayer * 100;
+    }
+
     public boolean spendAttributePoints(Attributes attribute, int points) {
         if (this.attributePoints >= points) {
             this.attributePoints -= points;
@@ -77,15 +112,11 @@ public class PlayerAttributes implements IPlayerAttributes {
         return false;
     }
 
-    // Método genérico para obter e definir qualquer atributo
-    @Override
-    public int getAttribute(Attributes attribute) {
-        return attributes.get(attribute);
-    }
+    public void levelUp() {
 
-    @Override
-    public void setAttribute(Attributes attribute, int value) {
-        attributes.put(attribute, value);
+        this.levelPlayer++;
+        this.experiencePoints = 0;
+        this.attributePoints += 5;
     }
 
     // Copiar dados de outra instância
@@ -102,16 +133,19 @@ public class PlayerAttributes implements IPlayerAttributes {
             System.out.println("Salvando " + attribute.getNbtKey() + ": " + attributes.get(attribute));
         }
         nbt.putInt("attributePoints", attributePoints);
+        nbt.putDouble("experiencePoints", experiencePoints);
+        nbt.putInt("levelPlayer", levelPlayer);
     }
 
     public void loadNBTData(CompoundTag nbt) {
         for (Attributes attribute : Attributes.values()) {
             int value = nbt.getInt(attribute.getNbtKey());
             this.attributes.put(attribute, value);
-            System.out.println("Carregando " + attribute.getNbtKey() + ": " + value);
         }
         this.attributePoints = nbt.getInt("attributePoints");
-        System.out.println("Carregando attributePoints: " + this.attributePoints);
+        this.experiencePoints = nbt.getDouble("experiencePoints");
+        this.levelPlayer = nbt.getInt("levelPlayer");
+
     }
 
 }
