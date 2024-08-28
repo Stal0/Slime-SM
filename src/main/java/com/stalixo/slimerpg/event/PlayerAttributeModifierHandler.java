@@ -22,6 +22,7 @@ public class PlayerAttributeModifierHandler {
     private static final UUID SPEED_MODIFIER_UUID = UUID.fromString("1b94c1bd-c13c-4bf2-83a3-2c9e2c7f3d24");
     private static final UUID ATTACK_DAMAGE_MODIFIER_UUID = UUID.fromString("7b44e0bd-d46c-41c6-9df0-59af4c5d4fdf");
 
+
     @SubscribeEvent
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
@@ -42,7 +43,7 @@ public class PlayerAttributeModifierHandler {
             player.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(speedModifier);
 
             // Modificador de ataque baseado no atributo Strength
-            double attackModifierValue = attributes.getStrength() * 0.5; // Exemplo: cada ponto em Strength adiciona 0.5 de dano
+            double attackModifierValue = attributes.getStrength() * 0.1; // Exemplo: cada ponto em Strength adiciona 0.5 de dano
             AttributeModifier attackModifier = new AttributeModifier(ATTACK_DAMAGE_MODIFIER_UUID, "Strength Attack Boost", attackModifierValue, AttributeModifier.Operation.ADDITION);
             player.getAttribute(Attributes.ATTACK_DAMAGE).addTransientModifier(attackModifier);
         });

@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @Mod.EventBusSubscriber
 public class AttributePointsCommand {
-
+/*
     @SubscribeEvent
     public static void onCommand(RegisterCommandsEvent event) {
         CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
@@ -31,24 +31,25 @@ public class AttributePointsCommand {
     }
 
     private static int appendPoints(CommandContext<CommandSourceStack> context) {
-try{
-    ServerPlayer player = context.getSource().getPlayerOrException();
-    int value = IntegerArgumentType.getInteger(context, "points");
+        try {
+            ServerPlayer player = context.getSource().getPlayerOrException();
+            int value = IntegerArgumentType.getInteger(context, "points");
 
-    Optional<Attributes> attributeOpt = getAttributeByName("strength");
+            Optional<Attributes> attributeOpt = getAttributeByName("strength");
 
-    if (attributeOpt.isPresent()) {
-        Attributes attribute = attributeOpt.get();
-        player.getCapability(PlayerAttributesProvider.PLAYER_ATTRIBUTES).ifPresent(attributes -> {
-            attributes.setAttribute(attribute, value);
-        });
-    } else {
-        context.getSource().sendFailure(Component.literal("Invalid attribute: " + attributeName));
-    }
+            if (attributeOpt.isPresent()) {
+                Attributes attribute = attributeOpt.get();
+                player.getCapability(PlayerAttributesProvider.PLAYER_ATTRIBUTES).ifPresent(attributes -> {
+                    attributes.setAttribute(attribute, value);
+                });
+            } else {
+                //  context.getSource().sendFailure(Component.literal("Invalid attribute: " + attributeName));
+            }
 
-} catch (CommandSyntaxException e) {
-    context.getSource().sendFailure(Component.literal("Failed to retrieve player: " + e.getMessage()));
-}
+        } catch (CommandSyntaxException e) {
+            context.getSource().sendFailure(Component.literal("Failed to retrieve player: " + e.getMessage()));
+        }
+        return 1;
     }
 
     private static Optional<Attributes> getAttributeByName(String attributeName) {
@@ -58,5 +59,5 @@ try{
             }
         }
         return Optional.empty();
-    }
+    } */
 }

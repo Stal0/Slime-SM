@@ -6,7 +6,8 @@ public enum MobExperience {
     CREEPER(20),
     ENDERMAN(50),
     WARDEN(500),
-    PIGLIN(20);
+    PIGLIN(20),
+    PILLAGER(100);
 
     private final int experiencePoints;
 

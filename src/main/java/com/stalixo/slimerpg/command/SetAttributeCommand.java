@@ -45,9 +45,9 @@ public class SetAttributeCommand {
             if (attributeOpt.isPresent()) {
                 Attributes attribute = attributeOpt.get();
                 player.getCapability(PlayerAttributesProvider.PLAYER_ATTRIBUTES).ifPresent(attributes -> {
-                    if (attributes.spendAttributePoints(attribute, value)) {
-                        player.sendSystemMessage(Component.literal("Attribute: " + attributeName + " of Player: " + player.getName() + " has been set to " + value).withStyle(ChatFormatting.LIGHT_PURPLE));
-                    }
+                    attributes.setAttribute(attribute, value);
+                    player.sendSystemMessage(Component.literal("Attribute: " + attributeName + " of Player: " + player.getName() + " has been set to " + value).withStyle(ChatFormatting.LIGHT_PURPLE));
+
                 });
             } else {
                 context.getSource().sendFailure(Component.literal("Invalid attribute: " + attributeName));
