@@ -2,9 +2,11 @@ package com.stalixo.slimerpg.capability;
 
 import com.stalixo.slimerpg.enums.Attributes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 
 import java.util.EnumMap;
 
+@AutoRegisterCapability
 public class PlayerAttributes implements IPlayerAttributes {
 
     private final EnumMap<Attributes, Integer> attributes = new EnumMap<>(Attributes.class);
@@ -125,6 +127,8 @@ public class PlayerAttributes implements IPlayerAttributes {
             this.attributes.put(attribute, source.getAttribute(attribute));
         }
         this.attributePoints = source.getAttributePoints();
+        this.experiencePoints = source.getExperiencePoints();
+        this.levelPlayer = source.getLevelPlayer();
     }
 
     public void saveNBTData(CompoundTag nbt) {
