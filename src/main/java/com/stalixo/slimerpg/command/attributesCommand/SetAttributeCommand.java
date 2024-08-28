@@ -1,4 +1,4 @@
-package com.stalixo.slimerpg.command;
+package com.stalixo.slimerpg.command.attributesCommand;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -60,7 +60,7 @@ public class SetAttributeCommand {
     }
 
 
-    private static Optional<Attributes> getAttributeByName(String attributeName) {
+    protected static Optional<Attributes> getAttributeByName(String attributeName) {
         for (Attributes attributes : Attributes.values()) {
             if (attributes.name().equalsIgnoreCase(attributeName)) {
                 return Optional.of(attributes);
