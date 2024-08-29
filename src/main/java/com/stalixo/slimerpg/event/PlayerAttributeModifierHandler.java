@@ -71,15 +71,11 @@ public class PlayerAttributeModifierHandler {
 
     @SubscribeEvent
     public static void onMobDeath(LivingDeathEvent event) {
-        // Verifica se o evento envolve um monstro e um jogador
-        System.out.println(event.getSource().getEntity());
-        System.out.println(event.getEntity().getName());
         if (event.getSource().getEntity() instanceof ServerPlayer player && event.getEntity() instanceof Monster) {
             Monster mob = (Monster) event.getEntity();
 
             // Converte o nome do mob para string para procurar no enum
             String mobName = mob.getName().getString(); // Isso pega o nome do mob, como "zombie", "creeper", etc.
-            System.out.println(mobName);
             // Obtém a experiência do enum
             int experiencePoints = MobExperience.getExperienceForMob(mobName);
 
@@ -91,8 +87,8 @@ public class PlayerAttributeModifierHandler {
 
                     // Verifica se o jogador deve subir de nível
                     while (attributes.getExperiencePoints() >= attributes.getExperienceToNextLevel()) {
-                        player.sendSystemMessage(Component.literal("Você subiu de nível!").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD));
                         attributes.levelUp();
+                        player.sendSystemMessage(Component.literal("Você subiu de nível!").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD));
                     }
                 });
             }

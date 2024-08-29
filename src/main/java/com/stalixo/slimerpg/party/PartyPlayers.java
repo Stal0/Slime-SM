@@ -3,14 +3,18 @@ package com.stalixo.slimerpg.party;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PartyPlayers {
 
-    ServerPlayer[] players = new ServerPlayer[4];
-    ServerPlayer leaderParty;
+    private static final int MAX_PLAYERS = 4;
+    private List<ServerPlayer> players = new ArrayList<>();
+    private ServerPlayer leaderParty;
 
     public PartyPlayers(ServerPlayer leaderParty) {
         this.leaderParty = leaderParty;
-        players[0] = leaderParty;
+        this.players.add(leaderParty);
     }
 
     public ServerPlayer getLeaderParty() {
@@ -21,29 +25,37 @@ public class PartyPlayers {
         this.leaderParty = leaderParty;
     }
 
-    public void addPlayer(ServerPlayer player) {
-        for (int i = 0; i <= players.length; i++) {
-            if (players[i] == null) {
-                players[i] = player;
-                return;
-            }
+    public boolean addPlayer(ServerPlayer player) {
+        if (players.size() < MAX_PLAYERS) {
+            players.add(player);
+            notifyParty(Component.literal(player.getName().getString() + " has joined the party!"));
+            return true;
+        } else {
+            leaderParty.sendSystemMessage(Component.literal("The party is full! Cannot add more players."));
+            return false;
         }
     }
 
     public void removePlayer(ServerPlayer player) {
-        for (int i = 0; i <= players.length; i++) {
-            if (player == players[i]) {
-                players[i] = null;
-                return;
-            }
+        if (players.remove(player)) {
+            notifyParty(Component.literal(player.getName().getString() + " has left the party!"));
         }
     }
 
     public void listParty(ServerPlayer player) {
         player.sendSystemMessage(Component.literal("Party List:"));
-        for (ServerPlayer player1 : players) {
-            player.sendSystemMessage(Component.literal(player1.getName().getString()));
+        for (ServerPlayer partyMember : players) {
+            if (partyMember != null) {
+                player.sendSystemMessage(Component.literal(partyMember.getName().getString()));
+            }
         }
     }
 
+    private void notifyParty(Component message) {
+        for (ServerPlayer partyMember : players) {
+            if (partyMember != null) {
+                partyMember.sendSystemMessage(message);
+            }
+        }
+    }
 }

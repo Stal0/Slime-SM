@@ -117,7 +117,7 @@ public class PlayerAttributes implements IPlayerAttributes {
     public void levelUp() {
 
         this.levelPlayer++;
-        this.experiencePoints -= getExperienceToNextLevel();
+        this.experiencePoints = Math.max(0, this.experiencePoints - getExperienceToNextLevel());
         this.attributePoints += 5;
     }
 
