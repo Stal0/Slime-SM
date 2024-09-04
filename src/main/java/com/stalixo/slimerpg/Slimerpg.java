@@ -20,7 +20,7 @@ public class Slimerpg {
 
     public static final String MODID = "slimerpg";
     private static final Logger LOGGER = LogUtils.getLogger();
-    private static final ConfigManager configManager = new ConfigManager();
+    public static final ConfigManager configManager = new ConfigManager();
 
     public Slimerpg() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();

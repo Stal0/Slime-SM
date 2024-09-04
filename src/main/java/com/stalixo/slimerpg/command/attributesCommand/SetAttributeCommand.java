@@ -32,7 +32,7 @@ public class SetAttributeCommand {
                 .requires(source -> source.hasPermission(2))
                 .then(Commands.argument("player", EntityArgument.player())
                         .then(Commands.argument("attribute", StringArgumentType.word())
-                                .then(Commands.argument("value", IntegerArgumentType.integer(0, 100))
+                                .then(Commands.argument("value", IntegerArgumentType.integer(0, 10000))
                                         .executes(SetAttributeCommand::setAttribute)))));
     }
 

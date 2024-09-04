@@ -1,5 +1,7 @@
 package com.stalixo.slimerpg.config;
 
+import com.stalixo.slimerpg.enums.MobExperience;
+
 import java.util.Map;
 
 public class Config {

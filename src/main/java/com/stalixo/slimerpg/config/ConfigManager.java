@@ -37,10 +37,16 @@ public class ConfigManager {
     }
 
     public void saveConfig() {
-        try (FileWriter writer = new FileWriter(CONFIG_FILE)) {
-            GSON.toJson(config, writer);
+        try {
+            if (!CONFIG_FILE.getParentFile().exists()) {
+                CONFIG_FILE.getParentFile().mkdirs();
+            }
+            try (FileWriter writer = new FileWriter(CONFIG_FILE)) {
+                GSON.toJson(config, writer);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }

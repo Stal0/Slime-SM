@@ -82,6 +82,10 @@ public class PlayerAttributes implements IPlayerAttributes {
         this.experiencePoints += points;
     }
 
+    public void setExperiencePoints(int points) {
+        this.experiencePoints = points;
+    }
+
     public int getLevelPlayer() {
         return levelPlayer;
     }
