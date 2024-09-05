@@ -2,11 +2,14 @@ package com.stalixo.slimerpg.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.stalixo.slimerpg.enums.MobExperience;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ConfigManager {
 
@@ -32,6 +35,15 @@ public class ConfigManager {
             }
         } else {
             config = new Config();
+            config.setLevelCap(50);
+            config.setMaxPlayerSpeed(0.2);
+
+            Map<String, Double> mobExperienceMultipliers = new HashMap<>();
+            for (MobExperience mob : MobExperience.values()) {
+                mobExperienceMultipliers.put(mob.getMobName(), 1.0);
+            }
+
+            config.setMobsExperience(mobExperienceMultipliers);
             saveConfig();
         }
     }

@@ -1,17 +1,13 @@
 package com.stalixo.slimerpg.event;
 
-import com.google.common.collect.ImmutableMultimap;
 import com.stalixo.slimerpg.Slimerpg;
 import com.stalixo.slimerpg.capability.PlayerAttributesProvider;
 import com.stalixo.slimerpg.config.ConfigManager;
-import com.stalixo.slimerpg.enums.MobExperience;
 import com.stalixo.slimerpg.event.customEvent.PlayerAttributeUpdateEvent;
-import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
@@ -19,13 +15,11 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.spongepowered.asm.mixin.injection.struct.InjectorGroupInfo;
 
-import java.lang.reflect.MalformedParameterizedTypeException;
 import java.util.Map;
 import java.util.UUID;
 
-import static io.redspace.ironsspellbooks.api.registry.AttributeRegistry.MAX_MANA;
+import static io.redspace.ironsspellbooks.api.registry.AttributeRegistry.*;
 
 @Mod.EventBusSubscriber
 public class PlayerAttributeModifierHandler {
@@ -37,6 +31,8 @@ public class PlayerAttributeModifierHandler {
     private static final UUID ATTACK_SPEED_MODIFIER_UUID = UUID.fromString("4f37a1b3-4c61-4edb-b50e-6c5f4f5e4e6e");
     private static final UUID MAX_HEALTH_MODIFIER_UUID = UUID.fromString("3c8d45b4-bc4e-4b3e-a5e9-78d5f2e9a9c9");
     private static final UUID MAX_MANA_MODIFIER_UUID = UUID.fromString("e645641c-a89a-4591-887b-f119a7a1305f");
+    private static final UUID MANA_REGEN_MODIFIER_UUID = UUID.fromString("9582c7e1-c805-4bb9-985c-5837014b5a30");
+    private static final UUID SPELL_POWER_MODIFIER_UUID = UUID.fromString("b3b75d3c-1dde-425a-a801-45732cb66a20");
 
     @SubscribeEvent
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
@@ -60,10 +56,12 @@ public class PlayerAttributeModifierHandler {
             player.getAttribute(Attributes.ATTACK_SPEED).removeModifier(ATTACK_SPEED_MODIFIER_UUID);
             player.getAttribute(Attributes.MAX_HEALTH).removeModifier(MAX_HEALTH_MODIFIER_UUID);
             player.getAttribute(MAX_MANA.get()).removeModifier(MAX_MANA_MODIFIER_UUID);
+            player.getAttribute(AttributeRegistry.MANA_REGEN.get()).removeModifier(MANA_REGEN_MODIFIER_UUID);
+            player.getAttribute(AttributeRegistry.SPELL_POWER.get()).removeModifier(SPELL_POWER_MODIFIER_UUID);
 
 
             // Modificador de velocidade baseado no atributo Dexterity
-            double speedModifierValue = attributes.getDexterity() * 0.005;
+            double speedModifierValue = attributes.getDexterity() * 0.001;
 
             speedModifierValue = Math.min(speedModifierValue, configManager.getConfig().maxPlayerSpeed);
 
@@ -83,49 +81,17 @@ public class PlayerAttributeModifierHandler {
             AttributeModifier attackSpeedModifier = new AttributeModifier(ATTACK_SPEED_MODIFIER_UUID, "Attack Speed Boost", attackSpeedModifierValue, AttributeModifier.Operation.ADDITION);
             player.getAttribute(Attributes.ATTACK_SPEED).addTransientModifier(attackSpeedModifier);
 
-            float manaModifier = attributes.getIntelligence() * 2f;
-            AttributeModifier maxManaModifier = new AttributeModifier(MAX_MANA_MODIFIER_UUID, "Mana Modifier", manaModifier, AttributeModifier.Operation.ADDITION);
+            double manaModifierValue = attributes.getIntelligence() * 0.5;
+            AttributeModifier maxManaModifier = new AttributeModifier(MAX_MANA_MODIFIER_UUID, "Mana Modifier", manaModifierValue, AttributeModifier.Operation.ADDITION);
             player.getAttribute(MAX_MANA.get()).addTransientModifier(maxManaModifier);
+
+            double manaRegenModifierValue = attributes.getIntelligence() * 0.00001;
+            AttributeModifier manaRegenModifier = new AttributeModifier(MANA_REGEN_MODIFIER_UUID, "Mana Regen Modifier", manaRegenModifierValue, AttributeModifier.Operation.ADDITION);
+            player.getAttribute(MANA_REGEN.get()).addTransientModifier(manaRegenModifier);
+
+            double spellPowerModifierValue = attributes.getIntelligence() * 10;
+            AttributeModifier spellPowerModifier = new AttributeModifier(SPELL_POWER_MODIFIER_UUID, "Spell Power Modifier", spellPowerModifierValue, AttributeModifier.Operation.ADDITION);
+            player.getAttribute(SPELL_POWER.get()).addTransientModifier(spellPowerModifier);
         });
-    }
-
-
-    @SubscribeEvent
-    public static void onMobDeath(LivingDeathEvent event) {
-        if (event.getSource().getEntity() instanceof ServerPlayer player && event.getEntity() instanceof Monster) {
-            Monster mob = (Monster) event.getEntity();
-
-            // Converte o nome do mob para string para procurar no enum
-            String mobName = mob.getName().getString(); // Isso pega o nome do mob, como "zombie", "creeper", etc.
-            // Obtém a experiência do enum
-            int experiencePoints = MobExperience.getExperienceForMob(mobName);
-
-            if (experiencePoints > 0) {
-                double tempExperiencePoints = experiencePoints;
-
-                for (Map.Entry<String, Double> entry : configManager.getConfig().getMobExperienceMultipliers().entrySet()) {
-                    if (entry.getKey().equalsIgnoreCase(mobName)) {
-                        tempExperiencePoints = tempExperiencePoints * entry.getValue();
-                    }
-                }
-
-                double finalExperiencePoints = tempExperiencePoints;
-                player.getCapability(PlayerAttributesProvider.PLAYER_ATTRIBUTES).ifPresent(attributes -> {
-                    // Adiciona os pontos de experiência
-                    attributes.addExperiencePoints((int) finalExperiencePoints);
-
-                    // Verifica se o jogador deve subir de nível
-                    while (attributes.getExperiencePoints() >= attributes.getExperienceToNextLevel()) {
-                        //Verifica se o jogador já chegou no nível máximo
-                        if (attributes.getLevelPlayer() <= configManager.getConfig().levelCap) {
-                            attributes.levelUp();
-                            player.sendSystemMessage(Component.literal("Você subiu de nível!").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD));
-                        } else {
-                            attributes.setExperiencePoints(attributes.getExperienceToNextLevel() - 1);
-                        }
-                    }
-                });
-            }
-        }
     }
 }

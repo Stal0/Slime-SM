@@ -78,11 +78,11 @@ public class PlayerAttributes implements IPlayerAttributes {
         return experiencePoints;
     }
 
-    public void addExperiencePoints(int points) {
+    public void addExperiencePoints(double points) {
         this.experiencePoints += points;
     }
 
-    public void setExperiencePoints(int points) {
+    public void setExperiencePoints(double points) {
         this.experiencePoints = points;
     }
 

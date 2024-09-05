@@ -1,13 +1,11 @@
 package com.stalixo.slimerpg.config;
 
-import com.stalixo.slimerpg.enums.MobExperience;
-
 import java.util.Map;
 
 public class Config {
     public int levelCap;
     public double maxPlayerSpeed;
-    public Map<String, Double> mobExperienceMultipliers;
+    public Map<String, Double> mobsExperience;
 
     public int getLevelCap() {
         return levelCap;
@@ -25,11 +23,11 @@ public class Config {
         this.maxPlayerSpeed = maxPlayerSpeed;
     }
 
-    public Map<String, Double> getMobExperienceMultipliers() {
-        return mobExperienceMultipliers;
+    public Map<String, Double> getMobsExperience() {
+        return mobsExperience;
     }
 
-    public void setMobExperienceMultipliers(Map<String, Double> mobExperienceMultipliers) {
-        this.mobExperienceMultipliers = mobExperienceMultipliers;
+    public void setMobsExperience(Map<String, Double> mobsExperience) {
+        this.mobsExperience = mobsExperience;
     }
 }
