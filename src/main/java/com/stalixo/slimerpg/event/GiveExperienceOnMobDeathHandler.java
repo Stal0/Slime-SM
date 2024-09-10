@@ -47,7 +47,7 @@ public class GiveExperienceOnMobDeathHandler {
             // Verifica se o jogador deve subir de nível
             while (attributes.getExperiencePoints() >= attributes.getExperienceToNextLevel()) {
                 //Verifica se o jogador já chegou no nível máximo
-                if (attributes.getLevelPlayer() <= configManager.getConfig().levelCap) {
+                if (attributes.getLevelPlayer() <= configManager.getConfig().getLevelCap()) {
                     attributes.levelUp();
                     player.sendSystemMessage(Component.literal("Você subiu de nível!").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD));
                 } else {

@@ -46,6 +46,13 @@ public class PlayerAttributeModifierHandler {
         applyAttributeModifiers(event.getPlayer());
     }
 
+    @SubscribeEvent
+    public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) {
+            applyAttributeModifiers(player);
+        }
+    }
+
     public static void applyAttributeModifiers(ServerPlayer player) {
 
         player.getCapability(PlayerAttributesProvider.PLAYER_ATTRIBUTES).ifPresent(attributes -> {
@@ -63,7 +70,7 @@ public class PlayerAttributeModifierHandler {
             // Modificador de velocidade baseado no atributo Dexterity
             double speedModifierValue = attributes.getDexterity() * 0.001;
 
-            speedModifierValue = Math.min(speedModifierValue, configManager.getConfig().maxPlayerSpeed);
+            speedModifierValue = Math.min(speedModifierValue, configManager.getConfig().getMaxPlayerSpeed());
 
             AttributeModifier speedModifier = new AttributeModifier(SPEED_MODIFIER_UUID, "Dexterity Speed Boost", speedModifierValue, AttributeModifier.Operation.ADDITION);
             player.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(speedModifier);
