@@ -106,7 +106,7 @@ public class PlayerAttributes implements IPlayerAttributes {
 
     public int getExperienceToNextLevel() {
         // Exemplo simples: 100 pontos de experiência para subir de nível
-        return levelPlayer * 100;
+        return levelPlayer * 150;
     }
 
     public boolean spendAttributePoints(Attributes attribute, int points) {

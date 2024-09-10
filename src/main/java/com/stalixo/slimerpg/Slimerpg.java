@@ -2,7 +2,7 @@ package com.stalixo.slimerpg;
 
 import com.mojang.logging.LogUtils;
 import com.stalixo.slimerpg.config.ConfigManager;
-import com.stalixo.slimerpg.event.CapabilitiesEvents;
+import com.stalixo.slimerpg.event.CapabilitiesHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -29,7 +29,7 @@ public class Slimerpg {
         modEventBus.addListener(this::commonSetup);
 
         // Register ourselves for server and other game events we are interested in
-        MinecraftForge.EVENT_BUS.register(new CapabilitiesEvents());
+        MinecraftForge.EVENT_BUS.register(new CapabilitiesHandler());
         MinecraftForge.EVENT_BUS.register(this);
     }
 

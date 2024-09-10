@@ -22,13 +22,15 @@ public class GiveExperienceOnMobDeathHandler {
     public static void onMobDeath(LivingDeathEvent event) {
         if (event.getSource().getEntity() instanceof ServerPlayer player && event.getEntity() instanceof Monster) {
             Monster mob = (Monster) event.getEntity();
+            System.out.println(mob);
 
             String mobName = mob.getName().getString();
             Double experiencePoints = 0.0;
 
             for (Map.Entry<String, Double> mobInMap : configManager.getConfig().getMobsExperience().entrySet()) {
                 if (mobInMap.getKey().equalsIgnoreCase(mobName)) {
-                    experiencePoints *= mobInMap.getValue();
+                    experiencePoints += mobInMap.getValue();
+                    System.out.println(experiencePoints);
                 }
             }
             if (experiencePoints > 0) {
