@@ -24,12 +24,15 @@ public class GiveExperienceOnMobDeathHandler {
             Monster mob = (Monster) event.getEntity();
             System.out.println(mob);
 
-            String mobName = mob.getName().getString();
+            String mobName = String.valueOf(mob.getType().getDescription());
+            System.out.println();
+            System.out.println(mob.getType().getDescription());
+            System.out.println();
             Double experiencePoints = 0.0;
 
             for (Map.Entry<String, Double> mobInMap : configManager.getConfig().getMobsExperience().entrySet()) {
-                if (mobInMap.getKey().equalsIgnoreCase(mobName)) {
-                    experiencePoints += mobInMap.getValue();
+                if (mobInMap.getKey().contains(mobName)) {
+                    experiencePoints = mobInMap.getValue() * mob.getPersistentData().getInt("mobLevel");
                     System.out.println(experiencePoints);
                 }
             }

@@ -2,6 +2,8 @@ package com.stalixo.slimerpg.zones;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import net.minecraft.world.entity.monster.Monster;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -66,7 +68,10 @@ public class ZoneManager {
         return zones.stream().filter(zone -> zone.getName().equals(name)).findFirst().orElse(null);
     }
 
-    public int getMobLevel(int x, int y, int z) {
+    public int getMobLevel(Monster mob) {
+        int x = (int) mob.getX();
+        int y = (int) mob.getY();
+        int z = (int) mob.getZ();
         for (Zone zone : zones) {
             if (zone.isInside(x, y, z)) {
                 return zone.getMobLevel();
