@@ -1,5 +1,6 @@
 package com.stalixo.slimerpg.util;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.monster.Monster;
 
@@ -13,8 +14,14 @@ public class MobStarRating {
         int starRating = calculateStarRating();
         int boostedLevel = calculateBoostedLevel(baseLevel, starRating);
 
+        CompoundTag data = mob.getPersistentData();
+
         // Define o nome do mob com as estrelas e o novo nível
         String starString = getStarString(starRating);
+
+        data.putInt("starRating", starRating);
+        data.putInt("boostedLevel", boostedLevel);
+
         mob.setCustomName(Component.literal(starString + " " + mob.getName().getString() + " [Level: " + boostedLevel + "]"));
     }
 
