@@ -52,7 +52,7 @@ public class ListAttributesCommand {
                 message = "Level: " + attributes.getLevelPlayer();
                 player.sendSystemMessage(Component.literal(message).withStyle(ChatFormatting.DARK_AQUA));
 
-                message = "Experience Points: " + attributes.getExperiencePoints();
+                message = "Experience Points: " + String.format("%.2f", attributes.getExperiencePoints());
                 player.sendSystemMessage(Component.literal(message).withStyle(ChatFormatting.DARK_AQUA));
 
 

@@ -5,6 +5,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.stalixo.slimerpg.config.world.WorldLevelMob;
 import com.stalixo.slimerpg.enums.MobExperience;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobType;
 
 import java.io.File;
 import java.io.FileReader;
@@ -51,6 +55,7 @@ public class ConfigManager {
             config = new Config();
             config.setLevelCap(50);
             config.setMaxPlayerSpeed(0.02);
+            config.setFactorXpBase(200);
 
             Map<String, Double> mobExperienceMultipliers = new HashMap<>();
             for (MobExperience mob : MobExperience.values()) {
@@ -107,5 +112,6 @@ public class ConfigManager {
                 .findFirst()
                 .orElse(null);
     }
+
 
 }

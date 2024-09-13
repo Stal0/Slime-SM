@@ -3,9 +3,12 @@ package com.stalixo.slimerpg.event;
 import com.stalixo.slimerpg.Slimerpg;
 import com.stalixo.slimerpg.capability.PlayerAttributesProvider;
 import com.stalixo.slimerpg.config.ConfigManager;
+import com.stalixo.slimerpg.util.MobCalculationXP;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -20,27 +23,17 @@ public class GiveExperienceOnMobDeathHandler {
 
     @SubscribeEvent
     public static void onMobDeath(LivingDeathEvent event) {
-        if (event.getSource().getEntity() instanceof ServerPlayer player && event.getEntity() instanceof Monster) {
-            Monster mob = (Monster) event.getEntity();
-            System.out.println(mob);
+        if (event.getSource().getEntity() instanceof ServerPlayer player && event.getEntity() instanceof Mob mob) {
 
-            String mobName = String.valueOf(mob.getType().getDescription());
-            System.out.println();
-            System.out.println(mob.getType().getDescription());
-            System.out.println();
-            Double experiencePoints = 0.0;
+            double experiencePoints = MobCalculationXP.calculateTotalXp(player, mob);
 
-            for (Map.Entry<String, Double> mobInMap : configManager.getConfig().getMobsExperience().entrySet()) {
-                if (mobInMap.getKey().contains(mobName)) {
-                    experiencePoints = mobInMap.getValue() * mob.getPersistentData().getInt("mobLevel");
-                    System.out.println(experiencePoints);
-                }
-            }
             if (experiencePoints > 0) {
-                 levelUpVerify(experiencePoints, player);
+                System.out.println(experiencePoints);
+                levelUpVerify(experiencePoints, player);
             }
         }
     }
+
 
     private static void levelUpVerify(double experiencePoints, ServerPlayer player) {
         player.getCapability(PlayerAttributesProvider.PLAYER_ATTRIBUTES).ifPresent(attributes -> {

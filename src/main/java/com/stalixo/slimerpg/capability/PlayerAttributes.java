@@ -1,5 +1,7 @@
 package com.stalixo.slimerpg.capability;
 
+import com.stalixo.slimerpg.Slimerpg;
+import com.stalixo.slimerpg.config.ConfigManager;
 import com.stalixo.slimerpg.enums.Attributes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.AutoRegisterCapability;
@@ -8,6 +10,8 @@ import java.util.EnumMap;
 
 @AutoRegisterCapability
 public class PlayerAttributes implements IPlayerAttributes {
+
+    ConfigManager configManager = Slimerpg.configManager;
 
     private final EnumMap<Attributes, Integer> attributes = new EnumMap<>(Attributes.class);
     private int attributePoints;
@@ -105,8 +109,9 @@ public class PlayerAttributes implements IPlayerAttributes {
     }
 
     public int getExperienceToNextLevel() {
-        // Exemplo simples: 100 pontos de experiência para subir de nível
-        return levelPlayer * 150;
+        // Exemplo simples: 1000 pontos de experiência para subir de nível
+        return configManager.getConfig().getFactorXpBase() * (levelPlayer ^ 2);
+
     }
 
     public boolean spendAttributePoints(Attributes attribute, int points) {

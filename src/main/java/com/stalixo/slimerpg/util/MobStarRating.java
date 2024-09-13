@@ -20,7 +20,7 @@ public class MobStarRating {
         String starString = getStarString(starRating);
 
         data.putInt("starRating", starRating);
-        data.putInt("boostedLevel", boostedLevel);
+        data.putInt("mobLevel", boostedLevel);
 
         mob.setCustomName(Component.literal(starString + " " + mob.getName().getString() + " [Level: " + boostedLevel + "]"));
     }
