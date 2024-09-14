@@ -55,6 +55,9 @@ public class ListAttributesCommand {
                 message = "Experience Points: " + String.format("%.2f", attributes.getExperiencePoints());
                 player.sendSystemMessage(Component.literal(message).withStyle(ChatFormatting.DARK_AQUA));
 
+                message = "Experience to next level: " + attributes.getExperienceToNextLevel();
+                player.sendSystemMessage(Component.literal(message).withStyle(ChatFormatting.DARK_AQUA));
+
 
             });
         } catch (CommandSyntaxException e) {

@@ -48,7 +48,7 @@ public class MobCalculationXP {
                 rarityMultiplier = 1.5; // 50% de bônus
                 break;
             case 6: // Mítico
-                rarityMultiplier = 1.75; // 75% de bônus (dobro de XP)
+                rarityMultiplier = 1.75; // 75% de bônus
                 break;
             default:
                 rarityMultiplier = 1.0; // Se não tiver raridade definida, usa o padrão (comum)

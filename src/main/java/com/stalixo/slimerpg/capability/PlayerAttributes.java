@@ -109,10 +109,9 @@ public class PlayerAttributes implements IPlayerAttributes {
     }
 
     public int getExperienceToNextLevel() {
-        // Exemplo simples: 1000 pontos de experiência para subir de nível
-        return configManager.getConfig().getFactorXpBase() * (levelPlayer ^ 2);
-
+        return configManager.getConfig().getFactorXpBase() * (int) (Math.pow(levelPlayer, 2) / 2);
     }
+
 
     public boolean spendAttributePoints(Attributes attribute, int points) {
         if (this.attributePoints >= points) {
@@ -125,9 +124,13 @@ public class PlayerAttributes implements IPlayerAttributes {
 
     public void levelUp() {
 
+        int xpNeeded = getExperienceToNextLevel();
+        this.experiencePoints -= xpNeeded;  // Subtrai a experiência necessária para subir de nível
         this.levelPlayer++;
-        this.experiencePoints = Math.max(0, this.experiencePoints - getExperienceToNextLevel());
-        this.attributePoints += 5;
+        this.attributePoints += 5;  // Assume que você adiciona 5 pontos de atributo por nível
+
+        // Garante que os pontos de experiência não fiquem negativos
+        this.experiencePoints = Math.max(0, this.experiencePoints);
     }
 
     // Copiar dados de outra instância

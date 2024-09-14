@@ -1,28 +1,49 @@
 package com.stalixo.slimerpg.util;
 
+import net.minecraft.client.particle.Particle;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.monster.Monster;
+import yesman.epicfight.world.entity.EpicFightEntities;
 
+import java.awt.*;
 import java.util.Random;
 
 public class MobStarRating {
 
     private static final Random random = new Random();
 
-    public static void applyStarRating(Monster mob, int baseLevel) {
-        int starRating = calculateStarRating();
-        int boostedLevel = calculateBoostedLevel(baseLevel, starRating);
-
+    public static void applyStarRating(Mob mob, int baseLevel) {
         CompoundTag data = mob.getPersistentData();
 
-        // Define o nome do mob com as estrelas e o novo nível
+        int starRating;
+        int boostedLevel;
+
+        if (data.getInt("starRating") == 0) {
+            System.out.println("Novo mob, novas informações");
+             starRating = calculateStarRating();
+             boostedLevel = calculateBoostedLevel(baseLevel, starRating);
+
+            data.putInt("starRating", starRating);
+            data.putInt("mobLevel", boostedLevel);
+        } else {
+            System.out.println("restaurando informações");
+             starRating = data.getInt("starRating");
+             boostedLevel = data.getInt("mobLevel");
+        }
+
         String starString = getStarString(starRating);
 
-        data.putInt("starRating", starRating);
-        data.putInt("mobLevel", boostedLevel);
+        String nameMob = mob.getName().getString();
 
-        mob.setCustomName(Component.literal(starString + " " + mob.getName().getString() + " [Level: " + boostedLevel + "]"));
+        mob.setCustomName(Component.empty());
+
+        if (mob.isAlive()) {
+            mob.setGlowingTag(true);
+        }
+
+        //mob.setCustomName(Component.literal(starString + " " + nameMob + " [Level: " + boostedLevel + "]"));
     }
 
     private static int calculateStarRating() {

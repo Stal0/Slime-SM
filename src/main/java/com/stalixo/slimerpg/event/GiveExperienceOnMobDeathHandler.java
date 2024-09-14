@@ -26,6 +26,10 @@ public class GiveExperienceOnMobDeathHandler {
         if (event.getSource().getEntity() instanceof ServerPlayer player && event.getEntity() instanceof Mob mob) {
 
             double experiencePoints = MobCalculationXP.calculateTotalXp(player, mob);
+            System.out.println(experiencePoints);
+            System.out.println(mob.getPersistentData().getInt("mobLevel"));
+            System.out.println(mob.getPersistentData().getInt("starRating"));
+
 
             if (experiencePoints > 0) {
                 System.out.println(experiencePoints);
