@@ -1,5 +1,6 @@
 package com.stalixo.slimerpg.util;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -21,14 +22,12 @@ public class MobStarRating {
         int boostedLevel;
 
         if (data.getInt("starRating") == 0) {
-            System.out.println("Novo mob, novas informações");
              starRating = calculateStarRating();
              boostedLevel = calculateBoostedLevel(baseLevel, starRating);
 
             data.putInt("starRating", starRating);
             data.putInt("mobLevel", boostedLevel);
         } else {
-            System.out.println("restaurando informações");
              starRating = data.getInt("starRating");
              boostedLevel = data.getInt("mobLevel");
         }
@@ -37,13 +36,9 @@ public class MobStarRating {
 
         String nameMob = mob.getName().getString();
 
-        mob.setCustomName(Component.empty());
+        mob.setCustomName(Component.literal("Level: " + boostedLevel).withStyle(ChatFormatting.GOLD));
 
-        if (mob.isAlive()) {
-            mob.setGlowingTag(true);
-        }
 
-        //mob.setCustomName(Component.literal(starString + " " + nameMob + " [Level: " + boostedLevel + "]"));
     }
 
     private static int calculateStarRating() {
