@@ -28,12 +28,7 @@ public class MobStarRating {
              boostedLevel = data.getInt("mobLevel");
         }
 
-        String starString = getStarString(starRating);
-
-        String nameMob = mob.getName().getString();
-
-        mob.setCustomName(Component.literal("Level: " + boostedLevel).withStyle(ChatFormatting.GOLD));
-
+        setCustomNameLevel(starRating, mob, boostedLevel);
 
     }
 
@@ -76,28 +71,27 @@ public class MobStarRating {
         }
     }
 
-    private static String getStarString(int starRating) {
-        String stars = "";
+    private static void setCustomNameLevel(int starRating, Mob mob, int level) {
+
         switch (starRating) {
             case 1:
-                stars = "§7★"; // Cinza
+                mob.setCustomName(Component.literal("Level: " + level).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.BOLD));
                 break;
             case 2:
-                stars = "§a★★"; // Verde
+                mob.setCustomName(Component.literal("Level: " + level).withStyle(ChatFormatting.GREEN).withStyle(ChatFormatting.BOLD));
                 break;
             case 3:
-                stars = "§9★★★"; // Azul
+                mob.setCustomName(Component.literal("Level: " + level).withStyle(ChatFormatting.BLUE).withStyle(ChatFormatting.BOLD));
                 break;
             case 4:
-                stars = "§5★★★★"; // Roxo
+                mob.setCustomName(Component.literal("Level: " + level).withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.BOLD));
                 break;
             case 5:
-                stars = "§6★★★★★"; // Dourado
+                mob.setCustomName(Component.literal("Level: " + level).withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.BOLD));
                 break;
             case 6:
-                stars = "§0★★★★★★"; // Preto
+                mob.setCustomName(Component.literal("Level: " + level).withStyle(ChatFormatting.BLACK).withStyle(ChatFormatting.BOLD));
                 break;
         }
-        return stars;
     }
 }

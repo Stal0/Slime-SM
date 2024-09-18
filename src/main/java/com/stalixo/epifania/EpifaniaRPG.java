@@ -3,10 +3,13 @@ package com.stalixo.epifania;
 import com.mojang.logging.LogUtils;
 import com.stalixo.epifania.config.ConfigManager;
 import com.stalixo.epifania.event.CapabilitiesHandler;
+import com.stalixo.epifania.item.ModItems;
 import com.stalixo.epifania.particle.ModParticles;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -30,16 +33,25 @@ public class EpifaniaRPG {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
+        ModItems.register(modEventBus);
         ModParticles.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(new CapabilitiesHandler());
         GeckoLib.initialize();
         MinecraftForge.EVENT_BUS.register(this);
+        modEventBus.addListener(this::addCreative);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         LOGGER.info("HELLO FROM COMMON SETUP");
+    }
+
+    private void addCreative(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
+            event.accept(ModItems.HYBERNIUM_ORE);
+            event.accept(ModItems.HYBERNIUM_INGOT);
+        }
     }
 
     @SubscribeEvent

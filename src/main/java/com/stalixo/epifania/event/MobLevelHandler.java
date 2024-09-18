@@ -26,8 +26,6 @@ public class MobLevelHandler {
     static ZoneManager zoneManager = ZoneManager.getInstance();
     static ConfigManager configManager = EpifaniaRPG.configManager;
 
-    private static final int COOLDOWN_TIME = 100;
-
     @SubscribeEvent
     public static void onMobConvert(LivingConversionEvent.Post event) {
         LivingEntity originalEntity = event.getEntity();
@@ -83,65 +81,6 @@ public class MobLevelHandler {
             mob.setHealth(mob.getMaxHealth());
 
             mob.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(3.0 + mobLevel * 1.5);
-
-        }
-    }
-
-    @SubscribeEvent
-    public static void onMobTick(LivingEvent.LivingTickEvent event) {
-        LivingEntity entity = event.getEntity();
-
-        // Verifica se é um Mob específico, pode ser Monster, Creeper, etc.
-        if (entity instanceof Mob) {
-            Mob mob = (Mob) entity;
-
-            // Adiciona o cooldown no NBT da entidade (ou use uma variável customizada)
-            if (mob.getPersistentData().getInt("particleCooldown") <= 0) {
-                // Reseta o cooldown
-                mob.getPersistentData().putInt("particleCooldown", COOLDOWN_TIME);
-
-                int starRating = mob.getPersistentData().getInt("starRating");
-
-                // Spawna as partículas
-                spawnParticlesAroundMob(mob, starRating);
-            } else {
-                // Reduz o cooldown a cada tick
-                mob.getPersistentData().putInt("particleCooldown", mob.getPersistentData().getInt("particleCooldown") - 1);
-            }
-        }
-    }
-
-    // Função que spawnará as partículas ao redor do mob
-    private static void spawnParticlesAroundMob(Mob mob, int starRating) {
-        for (int i = 0; i < 10; i++) {
-            double offsetX = (mob.level().random.nextDouble() - 0.5D) * 2.0D;
-            double offsetY = mob.level().random.nextDouble() * mob.getBbHeight();
-            double offsetZ = (mob.level().random.nextDouble() - 0.5D) * 2.0D;
-
-            switch (starRating) {
-                case 1:
-                    mob.level().addParticle(ModParticles.COMMON_PARTICLES.get(), mob.getX() + offsetX, mob.getY() + offsetY, mob.getZ() + offsetZ, 0.0D, 0.0D, 0.0D);
-                    break;
-                case 2:
-                    mob.level().addParticle(ModParticles.UNCOMMON_PARTICLES.get(), mob.getX() + offsetX, mob.getY() + offsetY, mob.getZ() + offsetZ, 0.0D, 0.0D, 0.0D);
-                    break;
-                case 3:
-                    mob.level().addParticle(ModParticles.RARE_PARTICLES.get(), mob.getX() + offsetX, mob.getY() + offsetY, mob.getZ() + offsetZ, 0.0D, 0.0D, 0.0D);
-                    break;
-                case 4:
-                    mob.level().addParticle(ModParticles.EPIC_PARTICLES.get(), mob.getX() + offsetX, mob.getY() + offsetY, mob.getZ() + offsetZ, 0.0D, 0.0D, 0.0D);
-                    break;
-                case 5:
-                    mob.level().addParticle(ModParticles.LEGENDARY_PARTICLES.get(), mob.getX() + offsetX, mob.getY() + offsetY, mob.getZ() + offsetZ, 0.0D, 0.0D, 0.0D);
-                    break;
-                case 6:
-                    mob.level().addParticle(ModParticles.MYTHICAL_PARTICLES.get(), mob.getX() + offsetX, mob.getY() + offsetY, mob.getZ() + offsetZ, 0.0D, 0.0D, 0.0D);
-                    break;
-                default:
-                    mob.level().addParticle(ModParticles.COMMON_PARTICLES.get(), mob.getX() + offsetX, mob.getY() + offsetY, mob.getZ() + offsetZ, 0.0D, 0.0D, 0.0D);
-                    break;
-            }
-
 
         }
     }
