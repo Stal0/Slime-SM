@@ -52,8 +52,7 @@ public class EpifaniaRPG {
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
-            event.accept(ModItems.HYBERNIUM_ORE);
-            event.accept(ModItems.HYBERNIUM_INGOT);
+
         }
     }
 

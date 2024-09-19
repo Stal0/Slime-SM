@@ -1,0 +1,18 @@
+{
+  "parent": "minecraft:item/handheld",
+  "loader": "forge:separate_transforms",
+  "base": {
+  "parent": "epifania:item/hybernium_sword_3d"
+},
+  "perspectives": {
+    "gui": {
+      "parent": "epifania:item/hybernium_sword_2d"
+    },
+    "ground": {
+      "parent": "epifania:item/hybernium_sword_3d"
+    },
+    "fixed": {
+      "parent": "epifania:item/hybernium_sword_2d"
+    }
+  }
+}

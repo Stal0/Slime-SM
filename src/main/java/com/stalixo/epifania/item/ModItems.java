@@ -17,6 +17,9 @@ public class ModItems {
     public static final RegistryObject<Item> HYBERNIUM_INGOT = ITEMS.register("hybernium_ingot",
             () -> new Item(new Item.Properties()));
 
+    public static final RegistryObject<Item> HYBERNIUM_SWORD = ITEMS.register("hybernium_sword",
+            () -> new Item(new Item.Properties().stacksTo(1)));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }
