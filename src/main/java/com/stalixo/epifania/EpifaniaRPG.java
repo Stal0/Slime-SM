@@ -3,6 +3,7 @@ package com.stalixo.epifania;
 import com.mojang.logging.LogUtils;
 import com.stalixo.epifania.config.ConfigManager;
 import com.stalixo.epifania.event.CapabilitiesHandler;
+import com.stalixo.epifania.item.ModCreativeModTabs;
 import com.stalixo.epifania.item.ModItems;
 import com.stalixo.epifania.particle.ModParticles;
 import net.minecraft.client.Minecraft;
@@ -32,6 +33,8 @@ public class EpifaniaRPG {
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
+
+        ModCreativeModTabs.register(modEventBus);
 
         ModItems.register(modEventBus);
         ModParticles.register(modEventBus);

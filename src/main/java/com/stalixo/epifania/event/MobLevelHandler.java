@@ -72,11 +72,6 @@ public class MobLevelHandler {
 
             MobStarRating.applyStarRating(mob, mobLevel);
 
-            CompoundTag data = mob.getPersistentData();
-
-            int starRating = data.getInt("starRating");
-
-
             mob.getAttribute(Attributes.MAX_HEALTH).setBaseValue(mob.getMaxHealth() + mobLevel * 3);
             mob.setHealth(mob.getMaxHealth());
 

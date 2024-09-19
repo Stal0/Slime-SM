@@ -1,4 +1,6 @@
 {
   "item.epifania.hybernium_ore": "Hybernium Ore",
-  "item.epifania.hybernium_ingot": "Hybernium Ingot"
+  "item.epifania.hybernium_ingot": "Hybernium Ingot",
+
+  "creativetab.epifania_tab": "Epifania"
 }
