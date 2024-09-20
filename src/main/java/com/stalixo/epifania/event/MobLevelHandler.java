@@ -1,6 +1,7 @@
 package com.stalixo.epifania.event;
 
 import com.stalixo.epifania.EpifaniaRPG;
+import com.stalixo.epifania.capability.mobCapability.MobAttributesProvider;
 import com.stalixo.epifania.config.ConfigManager;
 import com.stalixo.epifania.config.world.WorldLevelMob;
 import com.stalixo.epifania.particle.ModParticles;
@@ -31,26 +32,16 @@ public class MobLevelHandler {
         LivingEntity originalEntity = event.getEntity();
         LivingEntity convertedEntity = event.getOutcome();
 
+        // Verifica se a entidade original e a convertida são mobs
         if (originalEntity instanceof Mob oldMob && convertedEntity instanceof Mob newMob) {
-            // Transfere o nível e a raridade do mob original para o mob transformado
-            CompoundTag oldData = oldMob.getPersistentData();
-            CompoundTag newData = newMob.getPersistentData();
 
-            // Mantém os dados de nível e raridade
-            int mobLevel = oldData.getInt("mobLevel");
-            int starRating = oldData.getInt("starRating");
-
-            // Copia os dados para a nova entidade
-            newData.putInt("mobLevel", mobLevel);
-            newData.putInt("starRating", starRating);
-
-            // Reaplica o nome com a classificação de estrelas e o nível
-            MobStarRating.applyStarRating(newMob, mobLevel);
-
-            // Atualiza os atributos de vida e ataque
-            newMob.getAttribute(Attributes.MAX_HEALTH).setBaseValue(newMob.getMaxHealth() + mobLevel * 3);
-            newMob.setHealth(newMob.getMaxHealth());
-            newMob.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(3.0 + mobLevel * 1.5);
+            // Pega a Capability do mob original
+            oldMob.getCapability(MobAttributesProvider.MOB_ATTRIBUTES).ifPresent(oldAttributes -> {
+                // Pega a Capability do mob transformado e copia os atributos
+                newMob.getCapability(MobAttributesProvider.MOB_ATTRIBUTES).ifPresent(newAttributes -> {
+                    newAttributes.copyFrom(oldAttributes);
+                });
+            });
         }
     }
 
@@ -71,11 +62,6 @@ public class MobLevelHandler {
             }
 
             MobStarRating.applyStarRating(mob, mobLevel);
-
-            mob.getAttribute(Attributes.MAX_HEALTH).setBaseValue(mob.getMaxHealth() + mobLevel * 3);
-            mob.setHealth(mob.getMaxHealth());
-
-            mob.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(3.0 + mobLevel * 1.5);
 
         }
     }

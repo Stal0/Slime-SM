@@ -1,9 +1,11 @@
 package com.stalixo.epifania.event;
 
 import com.stalixo.epifania.EpifaniaRPG;
-import com.stalixo.epifania.capability.PlayerAttributesProvider;
+import com.stalixo.epifania.capability.mobCapability.MobAttributesProvider;
+import com.stalixo.epifania.capability.playerCapability.PlayerAttributesProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -16,7 +18,14 @@ public class CapabilitiesHandler {
     @SubscribeEvent
     public static void onAttachCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof Player) {
-            event.addCapability(new ResourceLocation("slimerpg", "player_attributes"), new PlayerAttributesProvider());
+            event.addCapability(new ResourceLocation(EpifaniaRPG.MODID, "player_attributes"), new PlayerAttributesProvider());
+        }
+    }
+
+    @SubscribeEvent
+    public static void onAttachCapabilitiesMob(AttachCapabilitiesEvent<Entity> event) {
+        if (event.getObject() instanceof Mob) {
+            event.addCapability(new ResourceLocation(EpifaniaRPG.MODID, "mob_rarity"), new MobAttributesProvider());
         }
     }
 

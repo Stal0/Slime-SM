@@ -1,7 +1,7 @@
 package com.stalixo.epifania.util;
 
+import com.stalixo.epifania.capability.mobCapability.MobAttributesProvider;
 import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Mob;
 
@@ -12,29 +12,35 @@ public class MobStarRating {
     private static final Random random = new Random();
 
     public static void applyStarRating(Mob mob, int baseLevel) {
-        CompoundTag data = mob.getPersistentData();
+        // Usa a Capability para recuperar ou definir os valores de starRating e mobLevel
+        mob.getCapability(MobAttributesProvider.MOB_ATTRIBUTES).ifPresent(mobAttributes -> {
 
-        int starRating;
-        int boostedLevel;
+            int starRating;
+            int boostedLevel;
 
-        if (data.getInt("starRating") == 0) {
-             starRating = calculateStarRating();
-             boostedLevel = calculateBoostedLevel(baseLevel, starRating);
+            // Se o starRating não foi definido, gera novos valores
+            if (mobAttributes.getRarity() == 0) {
+                starRating = calculateRarity();
+                boostedLevel = calculateBoostedLevel(baseLevel, starRating);
 
-            data.putInt("starRating", starRating);
-            data.putInt("mobLevel", boostedLevel);
-        } else {
-             starRating = data.getInt("starRating");
-             boostedLevel = data.getInt("mobLevel");
-        }
+                // Armazena na Capability
+                mobAttributes.setRarity(starRating);
+                mobAttributes.setMobLevel(boostedLevel);
+            } else {
+                // Se já foi definido, recupera os valores existentes
+                starRating = mobAttributes.getRarity();
+                boostedLevel = mobAttributes.getMobLevel();
+            }
 
-        setCustomNameLevel(starRating, mob, boostedLevel);
+            // Define o nome customizado com base no nível e raridade
+            setCustomNameLevel(starRating, mob, boostedLevel);
 
+        });
     }
 
-    private static int calculateStarRating() {
+    private static int calculateRarity() {
         // Defina as porcentagens de probabilidade para cada estrela
-        int randomValue = random.nextInt(10000); // Gera um número aleatório de 0 a 99
+        int randomValue = random.nextInt(10000); // Gera um número aleatório de 0 a 9999
 
         if (randomValue < 6000) {
             return 1;
@@ -72,7 +78,7 @@ public class MobStarRating {
     }
 
     private static void setCustomNameLevel(int starRating, Mob mob, int level) {
-
+        // Aplica o nome customizado ao mob com base na raridade e no nível
         switch (starRating) {
             case 1:
                 mob.setCustomName(Component.literal("Level: " + level).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.BOLD));

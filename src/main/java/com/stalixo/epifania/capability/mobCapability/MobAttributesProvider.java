@@ -1,4 +1,4 @@
-package com.stalixo.epifania.capability;
+package com.stalixo.epifania.capability.mobCapability;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -10,23 +10,23 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 
-public class PlayerAttributesProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
-    public static Capability<PlayerAttributes> PLAYER_ATTRIBUTES = CapabilityManager.get(new CapabilityToken<PlayerAttributes>(){});
+public class MobAttributesProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
+    public static Capability<MobAttributes> MOB_ATTRIBUTES = CapabilityManager.get(new CapabilityToken<MobAttributes>(){});
 
-    private PlayerAttributes attributes = null;
+    private MobAttributes attributes = null;
 
-    private final LazyOptional<PlayerAttributes> instance = LazyOptional.of(this::createPlayerAttributes);
+    private final LazyOptional<MobAttributes> instance = LazyOptional.of(this::createMobAttributes);
 
-    private PlayerAttributes createPlayerAttributes() {
+    private MobAttributes createMobAttributes() {
         if (this.attributes == null) {
-            this.attributes = new PlayerAttributes();
+            this.attributes = new MobAttributes();
         }
         return this.attributes;
     }
 
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, Direction side) {
-        if (cap == PLAYER_ATTRIBUTES) {
+        if (cap == MOB_ATTRIBUTES) {
             return instance.cast();
         }
         return LazyOptional.empty();
@@ -35,12 +35,12 @@ public class PlayerAttributesProvider implements ICapabilityProvider, INBTSerial
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag nbt = new CompoundTag();
-        createPlayerAttributes().saveNBTData(nbt);
+        createMobAttributes().saveNBTData(nbt);
         return nbt;
     }
 
     @Override
     public void deserializeNBT(CompoundTag compoundTag) {
-        createPlayerAttributes().loadNBTData(compoundTag);
+        createMobAttributes().loadNBTData(compoundTag);
     }
 }

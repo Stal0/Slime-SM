@@ -1,4 +1,4 @@
-package com.stalixo.epifania.capability;
+package com.stalixo.epifania.capability.playerCapability;
 
 import com.stalixo.epifania.EpifaniaRPG;
 import com.stalixo.epifania.config.ConfigManager;

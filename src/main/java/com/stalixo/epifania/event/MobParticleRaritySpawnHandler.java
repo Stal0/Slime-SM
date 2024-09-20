@@ -1,8 +1,8 @@
 package com.stalixo.epifania.event;
 
 import com.stalixo.epifania.EpifaniaRPG;
+import com.stalixo.epifania.capability.mobCapability.MobAttributesProvider;
 import com.stalixo.epifania.particle.ModParticles;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraftforge.api.distmarker.Dist;
@@ -19,29 +19,34 @@ public class MobParticleRaritySpawnHandler {
     public static void onMobTick(LivingEvent.LivingTickEvent event) {
         LivingEntity entity = event.getEntity();
 
-        // Verifica se é um Mob específico, pode ser Monster, Creeper, etc.
+        // Verifica se é um Mob específico
         if (entity instanceof Mob) {
             Mob mob = (Mob) entity;
 
-            CompoundTag data = mob.getPersistentData();
+            // Usa a Capability para acessar os atributos do mob
+            mob.getCapability(MobAttributesProvider.MOB_ATTRIBUTES).ifPresent(mobAttributes -> {
 
-            // Adiciona o cooldown no NBT da entidade (ou use uma variável customizada)
-            if (data.getInt("particleCooldown") <= 0) {
-                // Reseta o cooldown
-                data.putInt("particleCooldown", COOLDOWN_TIME);
+                // Verifica se o cooldown chegou a 0
+                if (mobAttributes.getParticleCooldown() <= 0) {
+                    // Reseta o cooldown
+                    mobAttributes.setParticleCooldown(COOLDOWN_TIME);
 
-                int starRating = data.getInt("starRating");
+                    int rarity = mobAttributes.getRarity();
+                    int level = mobAttributes.getMobLevel();
 
-                if (starRating <= 0) {
-                    return; // Sem raridade, não spawna partículas
+                    // Se não houver raridade, não spawna partículas
+                    if (rarity <= 0) {
+                        return;
+                    }
+
+                    // Spawna as partículas de acordo com a raridade
+                    spawnParticlesAroundMob(mob, rarity);
+                    System.out.println(rarity + " " + level + " MobParticle" + mob.getType().toString());
+                } else {
+                    // Reduz o cooldown a cada tick
+                    mobAttributes.setParticleCooldown(mobAttributes.getParticleCooldown() - 1);
                 }
-
-                // Spawna as partículas
-                spawnParticlesAroundMob(mob, starRating);
-            } else {
-                // Reduz o cooldown a cada tick
-                data.putInt("particleCooldown", mob.getPersistentData().getInt("particleCooldown") - 1);
-            }
+            });
         }
     }
 
@@ -53,8 +58,7 @@ public class MobParticleRaritySpawnHandler {
             double offsetY = mob.level().random.nextDouble() * mob.getBbHeight();
             double offsetZ = (mob.level().random.nextDouble() - 0.5D) * 2.0D;
 
-            System.out.println(starRating + " " + mob.getPersistentData().getInt("mobLevel") + " " + mob.getType().toString());
-
+            // Spawna as partículas com base na raridade
             switch (starRating) {
                 case 1:
                     mob.level().addParticle(ModParticles.COMMON_PARTICLES.get(), mob.getX() + offsetX, mob.getY() + offsetY, mob.getZ() + offsetZ, 0.0D, 0.0D, 0.0D);
@@ -75,8 +79,6 @@ public class MobParticleRaritySpawnHandler {
                     mob.level().addParticle(ModParticles.MYTHICAL_PARTICLES.get(), mob.getX() + offsetX, mob.getY() + offsetY, mob.getZ() + offsetZ, 0.0D, 0.0D, 0.0D);
                     break;
             }
-
-
         }
     }
 }

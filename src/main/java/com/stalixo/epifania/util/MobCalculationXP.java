@@ -1,6 +1,8 @@
 package com.stalixo.epifania.util;
 
-import com.stalixo.epifania.capability.PlayerAttributesProvider;
+import com.google.common.util.concurrent.AtomicDouble;
+import com.stalixo.epifania.capability.mobCapability.MobAttributesProvider;
+import com.stalixo.epifania.capability.playerCapability.PlayerAttributesProvider;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Mob;
 
@@ -12,21 +14,28 @@ public class MobCalculationXP {
     public static double calculateTotalXp(ServerPlayer player, Mob mob) {
         double baseXp = configManager.getConfig().getXpBase(mob);
 
-        // Obter XP baseado no nível do mob
-        double xpFromLevel = calculateXpBasedOnLevel(mob.getPersistentData().getInt("mobLevel"), baseXp);
+        AtomicDouble xpFromRarity = new AtomicDouble(0);
 
-        // Ajustar com base na diferença de nível entre o jogador e o mob
-        double xpFromLevelDifference = calculateXpBasedOnLevelDifference(player, mob, xpFromLevel);
+        mob.getCapability(MobAttributesProvider.MOB_ATTRIBUTES).ifPresent(mobAttributes -> {
 
-        // Ajustar com base na raridade do mob
-        double xpFromRarity = calculateXpBasedOnRarity(mob, xpFromLevelDifference);
+            int mobLevel = mobAttributes.getMobLevel();
+            int rarity = mobAttributes.getRarity();
 
-        return xpFromRarity;
+            // Obter XP baseado no nível do mob
+            double xpFromLevel = calculateXpBasedOnLevel(mobLevel, baseXp);
+
+            // Ajustar com base na diferença de nível entre o jogador e o mob
+            double xpFromLevelDifference = calculateXpBasedOnLevelDifference(player, mobLevel, xpFromLevel);
+
+            // Ajustar com base na raridade do mob
+             xpFromRarity.set(calculateXpBasedOnRarity(rarity, xpFromLevelDifference));
+
+        });
+        return xpFromRarity.get();
+
     }
 
-    private static double calculateXpBasedOnRarity(Mob mob, double xpFromLevelDifference) {
-
-        int rarity = mob.getPersistentData().getInt("starRating");
+    private static double calculateXpBasedOnRarity(int rarity, double xpFromLevelDifference) {
 
         double rarityMultiplier;
 
@@ -58,13 +67,11 @@ public class MobCalculationXP {
         return xpFromLevelDifference * rarityMultiplier;
     }
 
-    private static double calculateXpBasedOnLevelDifference(ServerPlayer player, Mob mob, double xpFromLevel) {
+    private static double calculateXpBasedOnLevelDifference(ServerPlayer player, int mobLevel, double xpFromLevel) {
 
         int playerLevel = player.getCapability(PlayerAttributesProvider.PLAYER_ATTRIBUTES)
                 .map(attributes -> attributes.getLevelPlayer())
                 .orElse(0);
-
-        int mobLevel = mob.getPersistentData().getInt("mobLevel");
 
         int levelDifference = mobLevel - playerLevel;
 

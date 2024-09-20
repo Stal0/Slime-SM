@@ -1,7 +1,7 @@
 package com.stalixo.epifania.event;
 
 import com.stalixo.epifania.EpifaniaRPG;
-import com.stalixo.epifania.capability.PlayerAttributesProvider;
+import com.stalixo.epifania.capability.playerCapability.PlayerAttributesProvider;
 import com.stalixo.epifania.config.ConfigManager;
 import com.stalixo.epifania.util.MobCalculationXP;
 import net.minecraft.ChatFormatting;
@@ -22,10 +22,6 @@ public class GiveExperienceOnMobDeathHandler {
         if (event.getSource().getEntity() instanceof ServerPlayer player && event.getEntity() instanceof Mob mob) {
 
             double experiencePoints = MobCalculationXP.calculateTotalXp(player, mob);
-            System.out.println(experiencePoints);
-            System.out.println(mob.getPersistentData().getInt("mobLevel"));
-            System.out.println(mob.getPersistentData().getInt("starRating"));
-
 
             if (experiencePoints > 0) {
                 System.out.println(experiencePoints);

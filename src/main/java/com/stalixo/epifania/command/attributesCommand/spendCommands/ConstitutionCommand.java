@@ -4,7 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.stalixo.epifania.capability.PlayerAttributesProvider;
+import com.stalixo.epifania.capability.playerCapability.PlayerAttributesProvider;
 import com.stalixo.epifania.enums.Attributes;
 import com.stalixo.epifania.event.customEvent.PlayerAttributeUpdateEvent;
 import net.minecraft.commands.CommandSourceStack;
