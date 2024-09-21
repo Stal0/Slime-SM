@@ -10,6 +10,7 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+
 @Mod.EventBusSubscriber(modid = EpifaniaRPG.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = {Dist.CLIENT})
 public class MobParticleRaritySpawnHandler {
 
@@ -23,30 +24,35 @@ public class MobParticleRaritySpawnHandler {
         if (entity instanceof Mob) {
             Mob mob = (Mob) entity;
 
-            // Usa a Capability para acessar os atributos do mob
-            mob.getCapability(MobAttributesProvider.MOB_ATTRIBUTES).ifPresent(mobAttributes -> {
+            // Verifica se o código está rodando no servidor (sincronização é feita do servidor para o cliente)
+            if (!mob.level().isClientSide) {
+                // Usa a Capability para acessar os atributos do mob
+                mob.getCapability(MobAttributesProvider.MOB_ATTRIBUTES).ifPresent(mobAttributes -> {
 
-                // Verifica se o cooldown chegou a 0
-                if (mobAttributes.getParticleCooldown() <= 0) {
-                    // Reseta o cooldown
-                    mobAttributes.setParticleCooldown(COOLDOWN_TIME);
+                    // Verifica se o cooldown chegou a 0
+                    if (mobAttributes.getParticleCooldown() <= 0) {
+                        // Reseta o cooldown
+                        mobAttributes.setParticleCooldown(COOLDOWN_TIME);
 
-                    int rarity = mobAttributes.getRarity();
-                    int level = mobAttributes.getMobLevel();
+                        int rarity = mobAttributes.getRarity();
+                        int level = mobAttributes.getMobLevel();
 
-                    // Se não houver raridade, não spawna partículas
-                    if (rarity <= 0) {
-                        return;
+                        // Se não houver raridade, não spawna partículas
+                        if (rarity <= 0) {
+                            return;
+                        }
+
+                        // Spawna as partículas de acordo com a raridade
+                        spawnParticlesAroundMob(mob, rarity);
+
+                        System.out.println(level + " " + rarity + " " + mob.getType().toString());
+
+                    } else {
+                        // Reduz o cooldown a cada tick
+                        mobAttributes.setParticleCooldown(mobAttributes.getParticleCooldown() - 1);
                     }
-
-                    // Spawna as partículas de acordo com a raridade
-                    spawnParticlesAroundMob(mob, rarity);
-                    System.out.println(rarity + " " + level + " MobParticle" + mob.getType().toString());
-                } else {
-                    // Reduz o cooldown a cada tick
-                    mobAttributes.setParticleCooldown(mobAttributes.getParticleCooldown() - 1);
-                }
-            });
+                });
+            }
         }
     }
 

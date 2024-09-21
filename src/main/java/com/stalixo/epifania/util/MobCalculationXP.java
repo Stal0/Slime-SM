@@ -29,6 +29,8 @@ public class MobCalculationXP {
 
             // Ajustar com base na raridade do mob
              xpFromRarity.set(calculateXpBasedOnRarity(rarity, xpFromLevelDifference));
+            System.out.println(mobLevel);
+            System.out.println(rarity);
 
         });
         return xpFromRarity.get();

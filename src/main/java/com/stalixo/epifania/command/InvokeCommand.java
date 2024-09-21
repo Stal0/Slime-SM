@@ -4,7 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
-import com.stalixo.epifania.util.MobStarRating;
+import com.stalixo.epifania.capability.mobCapability.MobAttributesProvider;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
@@ -12,7 +12,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -58,7 +57,7 @@ public class InvokeCommand {
                 // Spawna o mob no mundo
                 world.addFreshEntity(mob);
 
-                // Aplica o nível e a raridade
+                // Aplica o nível e a raridade através da capability
                 applyMobLevelAndRarity(mob, rarity, level);
 
                 // Retorna sucesso
@@ -73,7 +72,7 @@ public class InvokeCommand {
         return 0;
     }
 
-    // Função para aplicar o nível e a raridade ao mob recém-spawnado
+    // Função para aplicar o nível e a raridade ao mob recém-spawnado usando capabilities
     private static void applyMobLevelAndRarity(Mob mob, String rarity, int level) {
         int starRating;
 
@@ -102,14 +101,12 @@ public class InvokeCommand {
                 break;
         }
 
-        // Aplica a raridade e o nível ao mob
-        MobStarRating.applyStarRating(mob, level);
+        // Aplica os valores de nível e raridade na Capability do mob
+        mob.getCapability(MobAttributesProvider.MOB_ATTRIBUTES).ifPresent(mobAttributes -> {
+            mobAttributes.setMobLevel(level);  // Define o nível
+            mobAttributes.setRarity(starRating);  // Define a raridade
 
-        // Define o nível e a raridade na tag NBT ou capability, se necessário
-        mob.getPersistentData().putInt("starRating", starRating);
-        mob.getPersistentData().putInt("mobLevel", level);
-
-        // Atualiza os atributos (vida, ataque) do mob, se necessário
-        mob.setHealth(mob.getMaxHealth());
+        });
     }
+
 }

@@ -109,7 +109,12 @@ public class PlayerAttributes implements IPlayerAttributes {
     }
 
     public int getExperienceToNextLevel() {
-        return configManager.getConfig().getFactorXpBase() * (int) (Math.pow(levelPlayer, 2) / 2);
+        int value = configManager.getConfig().getFactorXpBase() * (int) (Math.pow(levelPlayer, 2) / 2);
+        if (value == 0) {
+            return configManager.getConfig().getFactorXpBase();
+        } else {
+            return value;
+        }
     }
 
 
