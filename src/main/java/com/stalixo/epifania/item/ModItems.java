@@ -20,6 +20,9 @@ public class ModItems {
     public static final RegistryObject<Item> HYBERNIUM_SWORD = ITEMS.register("hybernium_sword",
             () -> new Item(new Item.Properties().stacksTo(1)));
 
+    public static final RegistryObject<Item> PENCIL = ITEMS.register("pencil",
+            () -> new Item(new Item.Properties().stacksTo(1)));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

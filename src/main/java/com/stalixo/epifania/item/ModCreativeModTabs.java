@@ -21,6 +21,7 @@ public class ModCreativeModTabs {
                         pOutput.accept(ModItems.HYBERNIUM_ORE.get());
                         pOutput.accept(ModItems.HYBERNIUM_INGOT.get());
                         pOutput.accept(ModItems.HYBERNIUM_SWORD.get());
+                        pOutput.accept(ModItems.PENCIL.get());
                     })
                     .build());
 
