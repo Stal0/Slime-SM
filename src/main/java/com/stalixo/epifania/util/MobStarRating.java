@@ -96,7 +96,7 @@ public class MobStarRating {
                 mob.setCustomName(Component.literal("Level: " + level).withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.BOLD));
                 break;
             case 6:
-                mob.setCustomName(Component.literal("Level: " + level).withStyle(ChatFormatting.BLACK).withStyle(ChatFormatting.BOLD));
+                mob.setCustomName(Component.literal("Level: " + level).withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD));
                 break;
         }
     }
