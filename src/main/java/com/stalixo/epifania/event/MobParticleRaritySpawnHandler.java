@@ -3,6 +3,9 @@ package com.stalixo.epifania.event;
 import com.stalixo.epifania.EpifaniaRPG;
 import com.stalixo.epifania.capability.mobCapability.MobAttributesProvider;
 import com.stalixo.epifania.particle.ModParticles;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleEngine;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraftforge.api.distmarker.Dist;
@@ -45,7 +48,7 @@ public class MobParticleRaritySpawnHandler {
                         // Spawna as partículas de acordo com a raridade
                         spawnParticlesAroundMob(mob, rarity);
 
-                        System.out.println(level + " " + rarity + " " + mob.getType().toString());
+                      //  System.out.println(level + " " + rarity + " " + mob.getType().toString());
 
                     } else {
                         // Reduz o cooldown a cada tick
@@ -58,7 +61,6 @@ public class MobParticleRaritySpawnHandler {
 
     // Função que spawnará as partículas ao redor do mob
     private static void spawnParticlesAroundMob(Mob mob, int starRating) {
-
         for (int i = 0; i < 10; i++) {
             double offsetX = (mob.level().random.nextDouble() - 0.5D) * 2.0D;
             double offsetY = mob.level().random.nextDouble() * mob.getBbHeight();
@@ -67,7 +69,7 @@ public class MobParticleRaritySpawnHandler {
             // Spawna as partículas com base na raridade
             switch (starRating) {
                 case 1:
-                    mob.level().addParticle(ModParticles.COMMON_PARTICLES.get(), mob.getX() + offsetX, mob.getY() + offsetY, mob.getZ() + offsetZ, 0.0D, 0.0D, 0.0D);
+                    mob.level().addParticle(ParticleTypes.HAPPY_VILLAGER, mob.getX() + offsetX, mob.getY() + offsetY, mob.getZ() + offsetZ, 0.0D, 0.0D, 0.0D);
                     break;
                 case 2:
                     mob.level().addParticle(ModParticles.UNCOMMON_PARTICLES.get(), mob.getX() + offsetX, mob.getY() + offsetY, mob.getZ() + offsetZ, 0.0D, 0.0D, 0.0D);

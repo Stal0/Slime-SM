@@ -22,7 +22,10 @@ public class PencilMobEditorItem extends Item {
     @Override
     public InteractionResult interactLivingEntity(ItemStack pStack, Player pPlayer, LivingEntity pInteractionTarget, InteractionHand pUsedHand) {
         if (pInteractionTarget instanceof Mob mob) {
-            Minecraft.getInstance().setScreen(new MobSettingsScreen(Component.literal("Configurar Mob"), mob));
+
+            if (pPlayer.level().isClientSide) {
+                Minecraft.getInstance().setScreen(new MobSettingsScreen(Component.literal("Configurar Mob"), mob));
+            }
             return InteractionResult.SUCCESS;
         }
         pPlayer.sendSystemMessage(Component.literal("Mob not found!"));

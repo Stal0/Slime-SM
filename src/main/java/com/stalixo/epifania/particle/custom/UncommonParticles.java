@@ -34,7 +34,7 @@ public class UncommonParticles extends TextureSheetParticle {
     }
 
     private void fadeOut() {
-        this.alpha = (-(1/(float)lifetime) * age + 1);  // Configuração de fade
+        this.alpha = Math.max(0, Math.min(1, (-(1/(float)lifetime) * age + 1)));
     }
 
     @Override

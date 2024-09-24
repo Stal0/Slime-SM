@@ -2,6 +2,7 @@ package com.stalixo.epifania.gui;
 
 import com.stalixo.epifania.capability.mobCapability.MobAttributesProvider;
 import com.stalixo.epifania.util.MobStarRating;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
@@ -24,7 +25,7 @@ public class MobSettingsScreen extends Screen {
     private Button saveButton;
     private Mob mob;
 
-    private List<String> options = new ArrayList<>();
+    private List<String> options;
     private String selectedOption;
     private boolean isExpanded = false; // Estado de expansão do menu suspenso
 
@@ -120,7 +121,12 @@ public class MobSettingsScreen extends Screen {
         }
 
         // Renderiza os widgets (campos de texto e botões)
-        mobLevelField.render(guiGraphics, mouseX, mouseY, partialTicks);
+        if (mobLevelField != null) {
+            mobLevelField.render(guiGraphics, mouseX, mouseY, partialTicks);
+        } else {
+            System.out.println("mobLevelField está nulo!");
+        }
+
     }
 
     // Método para capturar cliques do mouse e selecionar opções
@@ -181,7 +187,7 @@ public class MobSettingsScreen extends Screen {
                 });
 
                 this.minecraft.player.sendSystemMessage(Component.literal("Configurações do mob aplicadas com sucesso!"));
-                this.minecraft.setScreen(null); // Fecha a tela após salvar
+                Minecraft.getInstance().tell(() -> Minecraft.getInstance().setScreen(null));
             }
         } catch (NumberFormatException e) {
             this.minecraft.player.sendSystemMessage(Component.literal("Por favor, insira um número válido para o nível do mob."));
