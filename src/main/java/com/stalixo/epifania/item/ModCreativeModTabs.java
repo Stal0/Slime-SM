@@ -1,6 +1,7 @@
 package com.stalixo.epifania.item;
 
 import com.stalixo.epifania.EpifaniaRPG;
+import com.stalixo.epifania.block.ModBlocks;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -22,6 +23,8 @@ public class ModCreativeModTabs {
                         pOutput.accept(ModItems.HYBERNIUM_INGOT.get());
                         pOutput.accept(ModItems.HYBERNIUM_SWORD.get());
                         pOutput.accept(ModItems.PENCIL.get());
+
+                        pOutput.accept(ModBlocks.ANVIL.get());
                     })
                     .build());
 

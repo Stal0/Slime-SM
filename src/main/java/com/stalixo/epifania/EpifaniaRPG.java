@@ -1,12 +1,16 @@
 package com.stalixo.epifania;
 
 import com.mojang.logging.LogUtils;
+import com.stalixo.epifania.block.ModBlocks;
 import com.stalixo.epifania.config.ConfigManager;
 import com.stalixo.epifania.event.CapabilitiesHandler;
 import com.stalixo.epifania.item.ModCreativeModTabs;
 import com.stalixo.epifania.item.ModItems;
 import com.stalixo.epifania.particle.ModParticles;
+import com.stalixo.epifania.screen.AnvilScreen;
+import com.stalixo.epifania.screen.ModMenuTypes;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -38,6 +42,8 @@ public class EpifaniaRPG {
 
         ModItems.register(modEventBus);
         ModParticles.register(modEventBus);
+        ModMenuTypes.register(modEventBus);
+        ModBlocks.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(new CapabilitiesHandler());
@@ -68,6 +74,8 @@ public class EpifaniaRPG {
         public static void onClientSetup(FMLClientSetupEvent event) {
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+
+            MenuScreens.register(ModMenuTypes.ANVIL_MENU.get(), AnvilScreen::new);
         }
     }
 }

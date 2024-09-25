@@ -18,7 +18,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
 
-        simpleBlock(ModBlocks.ANVIL.get(),
+        simpleBlockWithItem(ModBlocks.ANVIL.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/anvil")));
     }
 
