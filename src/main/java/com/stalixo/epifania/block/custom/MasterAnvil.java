@@ -1,6 +1,6 @@
 package com.stalixo.epifania.block.custom;
 
-import com.stalixo.epifania.block.entity.AnvilBlockEntity;
+import com.stalixo.epifania.block.entity.MasterAnvilBlockEntity;
 import com.stalixo.epifania.block.entity.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -22,10 +22,10 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
-public class Anvil extends BaseEntityBlock {
+public class MasterAnvil extends BaseEntityBlock {
     public static final VoxelShape SHAPE = Block.box(0, 0,0, 16, 12, 16);
 
-    public Anvil(Properties pProperties) {
+    public MasterAnvil(Properties pProperties) {
         super(pProperties);
     }
 
@@ -43,8 +43,8 @@ public class Anvil extends BaseEntityBlock {
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
         if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof AnvilBlockEntity) {
-                ((AnvilBlockEntity) blockEntity).drops();
+            if (blockEntity instanceof MasterAnvilBlockEntity) {
+                ((MasterAnvilBlockEntity) blockEntity).drops();
             }
         }
         super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
@@ -54,8 +54,8 @@ public class Anvil extends BaseEntityBlock {
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide()) {
             BlockEntity entity = pLevel.getBlockEntity(pPos);
-            if (entity instanceof AnvilBlockEntity) {
-                NetworkHooks.openScreen(((ServerPlayer) pPlayer), (AnvilBlockEntity)entity, pPos);
+            if (entity instanceof MasterAnvilBlockEntity) {
+                NetworkHooks.openScreen(((ServerPlayer) pPlayer), (MasterAnvilBlockEntity)entity, pPos);
             } else {
                 throw new IllegalStateException("Our Container provider is missing");
             }
@@ -66,7 +66,7 @@ public class Anvil extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new AnvilBlockEntity(blockPos, blockState);
+        return new MasterAnvilBlockEntity(blockPos, blockState);
     }
 
     @Nullable

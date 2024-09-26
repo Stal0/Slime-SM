@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "epifania:block/anvil_texture",
-		"particle": "epifania:block/anvil_texture"
+		"0": "epifania:block/master_anvil_texture",
+		"particle": "epifania:block/master_anvil_texture"
 	},
 	"elements": [
 		{

@@ -19,7 +19,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     protected void registerStatesAndModels() {
 
         simpleBlockWithItem(ModBlocks.ANVIL.get(),
-                new ModelFile.UncheckedModelFile(modLoc("block/anvil")));
+                new ModelFile.UncheckedModelFile(modLoc("block/master_anvil")));
     }
 
     private void blockWithItem(RegistryObject<Block> blockRegistryObject) {

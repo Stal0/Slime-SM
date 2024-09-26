@@ -2,6 +2,7 @@ package com.stalixo.epifania;
 
 import com.mojang.logging.LogUtils;
 import com.stalixo.epifania.block.ModBlocks;
+import com.stalixo.epifania.block.entity.ModBlockEntities;
 import com.stalixo.epifania.config.ConfigManager;
 import com.stalixo.epifania.event.CapabilitiesHandler;
 import com.stalixo.epifania.item.ModCreativeModTabs;
@@ -41,9 +42,12 @@ public class EpifaniaRPG {
         ModCreativeModTabs.register(modEventBus);
 
         ModItems.register(modEventBus);
-        ModParticles.register(modEventBus);
-        ModMenuTypes.register(modEventBus);
         ModBlocks.register(modEventBus);
+
+        ModMenuTypes.register(modEventBus);
+        ModBlockEntities.register(modEventBus);
+
+        ModParticles.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(new CapabilitiesHandler());
