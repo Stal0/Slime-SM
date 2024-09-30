@@ -23,6 +23,7 @@ public class ModCreativeModTabs {
                         pOutput.accept(ModItems.HYBERNIUM_INGOT.get());
                         pOutput.accept(ModItems.HYBERNIUM_SWORD.get());
                         pOutput.accept(ModItems.PENCIL.get());
+                        pOutput.accept(ModItems.RUBY.get());
 
                         pOutput.accept(ModBlocks.ANVIL.get());
                     })

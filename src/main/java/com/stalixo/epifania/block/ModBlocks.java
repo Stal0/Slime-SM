@@ -23,6 +23,9 @@ public class ModBlocks {
     public static final RegistryObject<Block> ANVIL = registerBlock("master_anvil",
             () -> new MasterAnvil(BlockBehaviour.Properties.copy(Blocks.ANVIL).noOcclusion()));
 
+    public static final RegistryObject<Block> FROZEN_STONE = registerBlock("frozen_stone",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
+
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);

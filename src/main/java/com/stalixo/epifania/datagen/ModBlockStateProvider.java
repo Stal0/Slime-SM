@@ -18,6 +18,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
 
+        blockWithItem(ModBlocks.FROZEN_STONE);
+
         simpleBlockWithItem(ModBlocks.ANVIL.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/master_anvil")));
     }

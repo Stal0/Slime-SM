@@ -1,10 +1,13 @@
 {
   "item.epifania.hybernium_ore": "Hybernium Ore",
   "item.epifania.hybernium_ingot": "Hybernium Ingot",
+  "item.epifania.ruby": "Ruby",
 
   "item.epifania.pencil": "Pencil",
 
   "item.epifania.hybernium_sword": "Hybernium Sword",
+
+  "block.epifania.frozen_stone": "Frozen Stone",
 
   "block.epifania.master_anvil": "Master Anvil",
 
