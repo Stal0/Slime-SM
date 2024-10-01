@@ -1,7 +1,7 @@
 package com.stalixo.epifania.block.entity;
 
 import com.stalixo.epifania.item.ModItems;
-import com.stalixo.epifania.screen.AnvilMenu;
+import com.stalixo.epifania.screen.anvil.AnvilMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -26,7 +26,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class MasterAnvilBlockEntity extends BlockEntity implements MenuProvider {
+public class AnvilBlockEntity extends BlockEntity implements MenuProvider {
     private final ItemStackHandler itemHandler = new ItemStackHandler(2);
 
     private static final int INPUT_SLOT_0 = 0;
@@ -38,14 +38,14 @@ public class MasterAnvilBlockEntity extends BlockEntity implements MenuProvider 
     private int progress = 0;
     private int maxProgress = 78;
 
-    public MasterAnvilBlockEntity(BlockPos pPos, BlockState pBlockState) {
+    public AnvilBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.ANVIL_BE.get(), pPos, pBlockState);
         this.data = new ContainerData() {
             @Override
             public int get(int i) {
                 return switch (i) {
-                    case 0 -> MasterAnvilBlockEntity.this.progress;
-                    case 1 -> MasterAnvilBlockEntity.this.maxProgress;
+                    case 0 -> AnvilBlockEntity.this.progress;
+                    case 1 -> AnvilBlockEntity.this.maxProgress;
                     default -> 0;
                 };
             }
@@ -53,8 +53,8 @@ public class MasterAnvilBlockEntity extends BlockEntity implements MenuProvider 
             @Override
             public void set(int i, int i1) {
                 switch (i) {
-                    case 0 -> MasterAnvilBlockEntity.this.progress = i1;
-                    case 1 -> MasterAnvilBlockEntity.this.maxProgress = i1;
+                    case 0 -> AnvilBlockEntity.this.progress = i1;
+                    case 1 -> AnvilBlockEntity.this.maxProgress = i1;
                 }
             }
 
@@ -63,6 +63,14 @@ public class MasterAnvilBlockEntity extends BlockEntity implements MenuProvider 
                 return 2;
             }
         };
+    }
+
+    public ItemStack getRenderStack() {
+        if (itemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty()) {
+            return itemHandler.getStackInSlot(INPUT_SLOT_0);
+        } else {
+            return itemHandler.getStackInSlot(OUTPUT_SLOT);
+        }
     }
 
     @Override
@@ -96,7 +104,7 @@ public class MasterAnvilBlockEntity extends BlockEntity implements MenuProvider 
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("block.epifania.master_anvil");
+        return Component.translatable("block.epifania.anvil");
     }
 
     @Nullable

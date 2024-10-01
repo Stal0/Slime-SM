@@ -1,4 +1,4 @@
-package com.stalixo.epifania.screen;
+package com.stalixo.epifania.screen.anvil;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.stalixo.epifania.EpifaniaRPG;
@@ -11,7 +11,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class AnvilScreen extends AbstractContainerScreen<AnvilMenu> {
     private static final ResourceLocation TEXTURE =
-            new ResourceLocation(EpifaniaRPG.MODID, "textures/gui/anvil_gui");
+            new ResourceLocation(EpifaniaRPG.MODID, "textures/gui/anvil_gui.png");
 
     public AnvilScreen(AnvilMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);

@@ -21,7 +21,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(ModBlocks.FROZEN_STONE);
 
         simpleBlockWithItem(ModBlocks.ANVIL.get(),
-                new ModelFile.UncheckedModelFile(modLoc("block/master_anvil")));
+                new ModelFile.UncheckedModelFile(modLoc("block/anvil")));
     }
 
     private void blockWithItem(RegistryObject<Block> blockRegistryObject) {

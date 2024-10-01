@@ -1,7 +1,8 @@
-package com.stalixo.epifania.screen;
+package com.stalixo.epifania.screen.anvil;
 
 import com.stalixo.epifania.block.ModBlocks;
-import com.stalixo.epifania.block.entity.MasterAnvilBlockEntity;
+import com.stalixo.epifania.block.entity.AnvilBlockEntity;
+import com.stalixo.epifania.screen.ModMenuTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -13,7 +14,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class AnvilMenu extends AbstractContainerMenu {
-    public final MasterAnvilBlockEntity blockEntity;
+    public final AnvilBlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
 
@@ -24,7 +25,7 @@ public class AnvilMenu extends AbstractContainerMenu {
     public AnvilMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
         super(ModMenuTypes.ANVIL_MENU.get(), pContainerId);
         checkContainerSize(inv, 2);
-        blockEntity = ((MasterAnvilBlockEntity) entity);
+        blockEntity = ((AnvilBlockEntity) entity);
         this.level = inv.player.level();
         this.data = data;
 

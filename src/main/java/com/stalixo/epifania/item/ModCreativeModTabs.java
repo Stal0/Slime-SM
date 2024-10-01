@@ -26,6 +26,7 @@ public class ModCreativeModTabs {
                         pOutput.accept(ModItems.RUBY.get());
 
                         pOutput.accept(ModBlocks.ANVIL.get());
+                        pOutput.accept(ModBlocks.FROZEN_STONE.get());
                     })
                     .build());
 

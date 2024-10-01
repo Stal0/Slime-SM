@@ -1,7 +1,7 @@
 package com.stalixo.epifania.block;
 
 import com.stalixo.epifania.EpifaniaRPG;
-import com.stalixo.epifania.block.custom.MasterAnvil;
+import com.stalixo.epifania.block.custom.Anvil;
 import com.stalixo.epifania.item.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -20,8 +20,8 @@ public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS =
             DeferredRegister.create(ForgeRegistries.BLOCKS, EpifaniaRPG.MODID);
 
-    public static final RegistryObject<Block> ANVIL = registerBlock("master_anvil",
-            () -> new MasterAnvil(BlockBehaviour.Properties.copy(Blocks.ANVIL).noOcclusion()));
+    public static final RegistryObject<Block> ANVIL = registerBlock("anvil",
+            () -> new Anvil(BlockBehaviour.Properties.copy(Blocks.ANVIL).noOcclusion()));
 
     public static final RegistryObject<Block> FROZEN_STONE = registerBlock("frozen_stone",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));

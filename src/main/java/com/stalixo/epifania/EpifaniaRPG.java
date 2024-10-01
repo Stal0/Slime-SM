@@ -8,7 +8,7 @@ import com.stalixo.epifania.event.CapabilitiesHandler;
 import com.stalixo.epifania.item.ModCreativeModTabs;
 import com.stalixo.epifania.item.ModItems;
 import com.stalixo.epifania.particle.ModParticles;
-import com.stalixo.epifania.screen.AnvilScreen;
+import com.stalixo.epifania.screen.anvil.AnvilScreen;
 import com.stalixo.epifania.screen.ModMenuTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;

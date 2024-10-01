@@ -1,5 +1,6 @@
 package com.stalixo.epifania.datagen;
 
+import com.stalixo.epifania.EpifaniaRPG;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -10,7 +11,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.concurrent.CompletableFuture;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = EpifaniaRPG.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DataGenerators {
 
     @SubscribeEvent

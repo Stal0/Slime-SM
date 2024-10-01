@@ -12,9 +12,9 @@ public class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
             DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, EpifaniaRPG.MODID);
 
-    public static final RegistryObject<BlockEntityType<MasterAnvilBlockEntity>> ANVIL_BE =
+    public static final RegistryObject<BlockEntityType<AnvilBlockEntity>> ANVIL_BE =
             BLOCK_ENTITIES.register("anvil_be", () ->
-        BlockEntityType.Builder.of(MasterAnvilBlockEntity::new,
+        BlockEntityType.Builder.of(AnvilBlockEntity::new,
                 ModBlocks.ANVIL.get()).build(null));
 
     public static void register(IEventBus bus) {

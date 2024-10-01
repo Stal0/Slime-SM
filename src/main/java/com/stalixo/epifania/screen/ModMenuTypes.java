@@ -1,6 +1,7 @@
 package com.stalixo.epifania.screen;
 
 import com.stalixo.epifania.EpifaniaRPG;
+import com.stalixo.epifania.screen.anvil.AnvilMenu;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
@@ -15,9 +16,9 @@ public class ModMenuTypes {
             DeferredRegister.create(ForgeRegistries.MENU_TYPES, EpifaniaRPG.MODID);
 
     public static final RegistryObject<MenuType<AnvilMenu>> ANVIL_MENU =
-            registerMenyType("anvil_menu", AnvilMenu::new);
+            registerMenuType("anvil", AnvilMenu::new);
 
-    private static <T extends AbstractContainerMenu>RegistryObject<MenuType<T>> registerMenyType(String name, IContainerFactory<T> factory) {
+    private static <T extends AbstractContainerMenu>RegistryObject<MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {
         return MENUS.register(name, () -> IForgeMenuType.create(factory));
     }
 
