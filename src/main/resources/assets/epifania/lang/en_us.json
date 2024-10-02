@@ -3,13 +3,20 @@
   "item.epifania.hybernium_ingot": "Hybernium Ingot",
   "item.epifania.ruby": "Ruby",
 
+  "item.epifania.brain": "Brain",
+  "item.epifania.rotten_brain": "Rotten Brain",
+
   "item.epifania.pencil": "Pencil",
 
   "item.epifania.hybernium_sword": "Hybernium Sword",
 
+  "item.epifania.strawberry": "Strawberry",
+
   "block.epifania.frozen_stone": "Frozen Stone",
 
   "block.epifania.anvil": "Anvil",
+
+  "tooltip.epifania.pencil.tooltip": "Edit mobs settings!",
 
   "creativetab.epifania_tab": "Epifania"
 }

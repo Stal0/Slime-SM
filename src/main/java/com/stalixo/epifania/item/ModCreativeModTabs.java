@@ -27,6 +27,11 @@ public class ModCreativeModTabs {
 
                         pOutput.accept(ModBlocks.ANVIL.get());
                         pOutput.accept(ModBlocks.FROZEN_STONE.get());
+
+                        pOutput.accept(ModItems.STRAWBERRY.get());
+
+                        pOutput.accept(ModItems.BRAIN.get());
+                        pOutput.accept(ModItems.ROTTEN_BRAIN.get());
                     })
                     .build());
 
