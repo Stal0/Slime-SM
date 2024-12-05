@@ -3,6 +3,8 @@ package com.stalixo.epifania.capability.playerCapability;
 import com.stalixo.epifania.EpifaniaRPG;
 import com.stalixo.epifania.config.ConfigManager;
 import com.stalixo.epifania.enums.Attributes;
+import com.stalixo.epifania.enums.Classes;
+import com.stalixo.epifania.enums.SubClasses;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 
@@ -17,6 +19,8 @@ public class PlayerAttributes implements IPlayerAttributes {
     private int attributePoints;
     private double experiencePoints;
     private int levelPlayer;
+    private Classes playerClass;
+    private SubClasses[] playerSubClasses;
 
     public PlayerAttributes() {
         // Inicializar atributos com valor padrão (por exemplo, 0)
@@ -106,6 +110,22 @@ public class PlayerAttributes implements IPlayerAttributes {
     @Override
     public void setAttribute(Attributes attribute, int value) {
         attributes.put(attribute, value);
+    }
+
+    public Classes getPlayerClass() {
+        return playerClass;
+    }
+
+    public void setPlayerClass(Classes playerClass) {
+        this.playerClass = playerClass;
+    }
+
+    public SubClasses[] getPlayerSubClasses() {
+        return playerSubClasses;
+    }
+
+    public void setPlayerSubClasses(SubClasses[] playerSubClasses) {
+        this.playerSubClasses = playerSubClasses;
     }
 
     public int getExperienceToNextLevel() {

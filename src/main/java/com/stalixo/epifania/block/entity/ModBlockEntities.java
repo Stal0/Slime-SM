@@ -2,6 +2,7 @@ package com.stalixo.epifania.block.entity;
 
 import com.stalixo.epifania.EpifaniaRPG;
 import com.stalixo.epifania.block.ModBlocks;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -16,6 +17,11 @@ public class ModBlockEntities {
             BLOCK_ENTITIES.register("anvil_be", () ->
         BlockEntityType.Builder.of(AnvilBlockEntity::new,
                 ModBlocks.ANVIL.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<AlchemyCauldronBlockEntity>> ALCHEMY_CAULDRON_BE =
+            BLOCK_ENTITIES.register("alchemy_cauldron_be", () ->
+                    BlockEntityType.Builder.of(AlchemyCauldronBlockEntity::new,
+                            ModBlocks.ALCHEMY_CAULDRON.get()).build(null));
 
     public static void register(IEventBus bus) {
         BLOCK_ENTITIES.register(bus);

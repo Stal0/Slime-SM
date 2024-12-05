@@ -4,6 +4,5 @@ public enum Classes {
     MAGE,
     ARCHERY,
     WARRIOR,
-    ARCHAEOLOGIST,
-    BLACKSMITH,
+    ARCHAEOLOGIST;
 }

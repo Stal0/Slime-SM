@@ -1,6 +1,7 @@
 package com.stalixo.epifania.block;
 
 import com.stalixo.epifania.EpifaniaRPG;
+import com.stalixo.epifania.block.custom.AlchemyCauldronBlock;
 import com.stalixo.epifania.block.custom.Anvil;
 import com.stalixo.epifania.item.ModItems;
 import net.minecraft.world.item.BlockItem;
@@ -22,6 +23,9 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> ANVIL = registerBlock("anvil",
             () -> new Anvil(BlockBehaviour.Properties.copy(Blocks.ANVIL).noOcclusion()));
+
+    public static final RegistryObject<Block> ALCHEMY_CAULDRON = registerBlock("alchemy_cauldron",
+            () -> new AlchemyCauldronBlock(BlockBehaviour.Properties.copy(Blocks.CAULDRON).noOcclusion()));
 
     public static final RegistryObject<Block> FROZEN_STONE = registerBlock("frozen_stone",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));

@@ -17,8 +17,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class ModRecipeProvider extends RecipeProvider implements IConditionBuilder {
-    //private static final List<ItemLike> HYBERNIUM_SMELTABLES = List.of(ModItems.HYBERNIUM_ORE.get(),
-    //        ModBlocks.)
+    private static final List<ItemLike> HYBERNIUM_SMELTABLES = List.of(ModItems.HYBERNIUM_ORE.get());
 
     public ModRecipeProvider(PackOutput pOutput) {
         super(pOutput);
@@ -26,7 +25,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> pWriter) {
-//oreBlasting(pWriter, );
+        oreBlasting(pWriter, HYBERNIUM_SMELTABLES, RecipeCategory.MISC, ModItems.HYBERNIUM_INGOT.get(), 0.7f, 200, "hybernium_ingot");
+        oreSmelting(pWriter, HYBERNIUM_SMELTABLES, RecipeCategory.MISC, ModItems.HYBERNIUM_INGOT.get(), 0.7f, 200, "hybernium_ingot");
     }
 
     protected static void oreSmelting(Consumer<FinishedRecipe> pFinishedRecipeConsumer, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, float pExperience, int pCookingTIme, String pGroup) {
@@ -38,7 +38,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     }
 
     protected static void oreCooking(Consumer<FinishedRecipe> pFinishedRecipeConsumer, RecipeSerializer<? extends AbstractCookingRecipe> pCookingSerializer, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, float pExperience, int pCookingTime, String pGroup, String pRecipeName) {
-        for(ItemLike itemlike : pIngredients) {
+        for (ItemLike itemlike : pIngredients) {
             SimpleCookingRecipeBuilder.generic(Ingredient.of(itemlike), pCategory, pResult,
                     pExperience, pCookingTime, pCookingSerializer).group(pGroup).unlockedBy(getHasName(itemlike),
                     has(itemlike)).save(pFinishedRecipeConsumer, EpifaniaRPG.MODID + ":" + getItemName(pResult) + pRecipeName + "_" + getItemName(itemlike));

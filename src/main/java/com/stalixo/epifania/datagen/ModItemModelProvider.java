@@ -19,6 +19,11 @@ public class ModItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
         simpleItem(ModItems.HYBERNIUM_INGOT);
         simpleItem(ModItems.HYBERNIUM_ORE);
+        simpleItem(ModItems.BRAIN);
+        simpleItem(ModItems.ROTTEN_BRAIN);
+        simpleItem(ModItems.RUBY);
+        simpleItem(ModItems.STRAWBERRY);
+
 
         simpleItem(ModItems.PENCIL);
         simpleItem(ModItems.HYBERNIUM_SWORD);

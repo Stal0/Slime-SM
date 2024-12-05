@@ -22,6 +22,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
         simpleBlockWithItem(ModBlocks.ANVIL.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/anvil")));
+
+        simpleBlockWithItem(ModBlocks.ALCHEMY_CAULDRON.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/alchemy_cauldron")));
     }
 
     private void blockWithItem(RegistryObject<Block> blockRegistryObject) {
