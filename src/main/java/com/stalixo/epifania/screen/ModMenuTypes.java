@@ -18,6 +18,9 @@ public class ModMenuTypes {
     public static final RegistryObject<MenuType<AnvilMenu>> ANVIL_MENU =
             registerMenuType("anvil", AnvilMenu::new);
 
+    public static final RegistryObject<MenuType<AlchemyCauldronMenu>> ALCHEMY_CAULDRON_MENU =
+            registerMenuType("alchemy_cauldron", AlchemyCauldronMenu::new);
+
     private static <T extends AbstractContainerMenu>RegistryObject<MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {
         return MENUS.register(name, () -> IForgeMenuType.create(factory));
     }

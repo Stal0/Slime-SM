@@ -8,6 +8,8 @@ import com.stalixo.epifania.event.CapabilitiesHandler;
 import com.stalixo.epifania.item.ModCreativeModTabs;
 import com.stalixo.epifania.item.ModItems;
 import com.stalixo.epifania.particle.ModParticles;
+import com.stalixo.epifania.screen.AlchemyCauldronMenu;
+import com.stalixo.epifania.screen.AlchemyCauldronScreen;
 import com.stalixo.epifania.screen.anvil.AnvilScreen;
 import com.stalixo.epifania.screen.ModMenuTypes;
 import net.minecraft.client.Minecraft;
@@ -80,6 +82,7 @@ public class EpifaniaRPG {
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
 
             MenuScreens.register(ModMenuTypes.ANVIL_MENU.get(), AnvilScreen::new);
+            MenuScreens.register(ModMenuTypes.ALCHEMY_CAULDRON_MENU.get(), AlchemyCauldronScreen::new);
         }
     }
 }
